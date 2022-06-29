@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>SYDE 361 - Data Visualizations</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script type="text/javascript" src="papaparse.min.js"></script>
+  </head>
+  <body>
+    <main>
+      <h1>SYDE 361 - Data Visualizations</h1>
+      <div id="chart"></div>
+      <script type="text/javascript">
+        const processData = (data) => {
+          let time = [];
+          let light = [];
+          let ultrasonic = [];
+          let temperature = [];
+          data.map((item) => {
+            time.push(item.time);
+            light.push(item.light);
+            ultrasonic.push(item.ultrasonic);
+            temperature.push(item.temperature);
+          });
+          return [time, light, ultrasonic, temperature];
+        };
+
+        Papa.parse("https://emily.louie.ca/syde361-data/sample_data.csv", {
+          header: true,
+          download: true,
+          dynamicTyping: true,
+          complete: function (results) {
+            console.log(results.data);
+            const data = processData(results.data);
+
+            let options = {
+              chart: {
+                type: "line",
+              },
+              series: [
+                {
+                  name: "light",
+                  data: data[1],
+                },
+                {
+                  name: "ultrasonic",
+                  data: data[2],
+                },
+                {
+                  name: "temperature",
+                  data: data[3],
+                },
+              ],
+              xaxis: {
+                categories: data[0],
+              },
+            };
+
+            let chart = new ApexCharts(
+              document.querySelector("#chart"),
+              options
+            );
+
+            chart.render();
+          },
+        });
+      </script>
+    </main>
+  </body>
+</html>
