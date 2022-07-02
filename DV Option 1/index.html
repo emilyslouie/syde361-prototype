@@ -6,205 +6,67 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>SYDE 361 - Data Visualizations</title>
     <link rel="stylesheet" href="./style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-      rel="stylesheet"
-    />
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script type="text/javascript" src="papaparse.min.js"></script>
   </head>
   <body>
     <main>
       <h1>SYDE 361 - Data Visualizations</h1>
-      <div class="card">
-        <h2>Day 1</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-        <div class="chart-content">
-          <div class="chart">
-            <h3>Light</h3>
-            <div id="day1-light"></div>
-          </div>
-          <div class="chart">
-            <h3>Humidex</h3>
-            <div id="day1-humidex"></div>
-          </div>
-        </div>
-      </div>
-
+      <div id="chart"></div>
       <script type="text/javascript">
-        const filesToParse = [
-          "https://emily.louie.ca/syde361-data/Recording_1.csv",
-          "https://emily.louie.ca/syde361-data/daily_mood_ratings.csv", // daily_mood_ratings.csv must be the last one
-        ];
-
-        const parseFiles = (files) => {
-          const filesData = []; // Array to save file data
-          Promise.all(
-            // Parse each file
-            [...files].map(
-              (file) =>
-                new Promise((resolve, reject) =>
-                  Papa.parse(file, {
-                    header: true,
-                    download: true,
-                    dynamicTyping: true,
-                    skipEmptyLines: true,
-                    complete: resolve, // Resolve each promise
-                    error: reject, // Reject if there is an error
-                  })
-                )
-            )
-          )
-            .then((results) => {
-              results.forEach((result, index) => {
-                // Save each file's data in a separate index
-                filesData.push(result);
-              });
-              console.log(filesData);
-
-              // For each day's worth of data, render charts
-              for (let i = 0; i < filesData.length - 1; i++) {
-                const processedData = processData(filesData[i].data);
-                console.log(processedData);
-
-                const dataNameIndex = 3;
-                const dataTypeIndex = 4;
-                const dataYAxisIndex = 5;
-                // iterate over each type of data
-                for (let j = 1; j < processedData.length - 3; j++) {
-                  renderChart(
-                    i + 1,
-                    processedData[dataTypeIndex][j], // dataType
-                    processedData[dataNameIndex][j], // dataName
-                    processedData[dataYAxisIndex][j], // dataYAxis
-                    [
-                      processedData[0], // time data
-                      processedData[j], // other specific data
-                    ]
-                  );
-                }
-              }
-            })
-            .catch((err) => console.log("Something went wrong:", err));
-        };
-
         const processData = (data) => {
           let time = [];
           let light = [];
-          let humidex = [];
-          let humidity = [];
+          let ultrasonic = [];
           let temperature = [];
-
-          // add data to arrays so it can be used in chart
           data.map((item) => {
             time.push(item.time);
-            light.push(item["light sense"]);
-            humidity.push(item.humidity);
-            temperature.push(item["temp (C)"]);
+            light.push(item.light);
+            ultrasonic.push(item.ultrasonic);
+            temperature.push(item.temperature);
           });
-
-          // convert humidity and temperature to humidex
-          for (let i = 0; i < humidity.length; i++) {
-            let humidityVal = humidity[i];
-            let tempVal = temperature[i];
-            let dewPointVal = calculateDewPoint(tempVal, humidityVal);
-            let humidexVal = calculateHumidex(tempVal, dewPointVal);
-            humidex.push(humidexVal);
-          }
-
-          return [
-            time,
-            light,
-            humidex,
-            ["time", "light", "humidex"], // dataName
-            ["line", "line", "line"], // chart type
-            ["Time", "Light in lumens", "Humidex in °C"],
-          ];
+          return [time, light, ultrasonic, temperature];
         };
 
-        const roundValue = (value) => {
-          return Number(value.toFixed(1));
-        };
+        Papa.parse("https://emily.louie.ca/syde361-data/sample_data.csv", {
+          header: true,
+          download: true,
+          dynamicTyping: true,
+          complete: function (results) {
+            console.log(results.data);
+            const data = processData(results.data);
 
-        const calculateDewPoint = (tempVal, humidityVal) => {
-          return tempVal - (100 - humidityVal) / 5;
-        };
-
-        const calculateHumidex = (tempVal, dewPointVal) => {
-          return roundValue(
-            tempVal +
-              (5 / 9) *
-                (6.11 *
-                  Math.exp(
-                    5417.753 * (1 / 273.16 - 1 / (273.15 + dewPointVal))
-                  ) -
-                  10)
-          );
-        };
-
-        const renderChart = (day, type, dataName, yAxis, data) => {
-          console.log(day, type, dataName, data);
-          let options = {
-            chart: {
-              type: `${type}`,
-              animations: {
-                enabled: false,
+            let options = {
+              chart: {
+                type: "line",
               },
-              toolbar: {
-                show: true,
-                tools: {
-                  download: true,
-                  selection: false,
-                  zoom: true,
-                  zoomin: false,
-                  zoomout: false,
-                  pan: false,
-                  reset: true,
+              series: [
+                {
+                  name: "light",
+                  data: data[1],
                 },
+                {
+                  name: "ultrasonic",
+                  data: data[2],
+                },
+                {
+                  name: "temperature",
+                  data: data[3],
+                },
+              ],
+              xaxis: {
+                categories: data[0],
               },
-            },
-            series: [
-              {
-                name: `${dataName}`,
-                data: data[1], // specific data
-              },
-            ],
-            xaxis: {
-              categories: data[0], // time data
-              tickAmount: 15,
-            },
-            yaxis: {
-              title: {
-                text: yAxis,
-              },
-            },
-            stroke: {
-              curve: "smooth",
-            },
-            markers: {
-              size: 0,
-            },
-          };
+            };
 
-          let chart = new ApexCharts(
-            document.querySelector(`#day${day}-${dataName}`),
-            options
-          );
+            let chart = new ApexCharts(
+              document.querySelector("#chart"),
+              options
+            );
 
-          chart.render();
-        };
-
-        parseFiles(filesToParse);
+            chart.render();
+          },
+        });
       </script>
     </main>
   </body>

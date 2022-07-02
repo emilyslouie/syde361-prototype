@@ -1,4 +1,20 @@
-#chart {
-  max-width: 650px;
-  margin: 35px auto;
+body {
+  font-family: "IBM Plex Sans", sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card {
+  border-radius: 8px;
+  padding: 4px 16px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.chart-content {
+  display: flex;
+  flex-direction: row;
+}
+
+.chart {
+  width: 100%;
 }
