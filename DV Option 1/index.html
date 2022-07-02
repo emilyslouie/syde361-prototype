@@ -6,18 +6,39 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>SYDE 361 - Data Visualizations</title>
     <link rel="stylesheet" href="./style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script type="text/javascript" src="papaparse.min.js"></script>
   </head>
   <body>
     <main>
       <h1>SYDE 361 - Data Visualizations</h1>
-      <div>
+      <div class="card">
         <h2>Day 1</h2>
-        <h3>light</h3>
-        <div class="chart" id="day1-light"></div>
-        <h3>humidex</h3>
-        <div class="chart" id="day1-humidex"></div>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <div class="chart-content">
+          <div class="chart">
+            <h3>Light</h3>
+            <div id="day1-light"></div>
+          </div>
+          <div class="chart">
+            <h3>Humidex</h3>
+            <div id="day1-humidex"></div>
+          </div>
+        </div>
       </div>
 
       <script type="text/javascript">
@@ -56,14 +77,16 @@
                 const processedData = processData(filesData[i].data);
                 console.log(processedData);
 
-                const dataTypeIndex = 3;
-                const dataNameIndex = 4;
+                const dataNameIndex = 3;
+                const dataTypeIndex = 4;
+                const dataYAxisIndex = 5;
                 // iterate over each type of data
-                for (let j = 1; j < processedData.length - 2; j++) {
+                for (let j = 1; j < processedData.length - 3; j++) {
                   renderChart(
                     i + 1,
-                    processedData[dataNameIndex][j],
-                    processedData[dataTypeIndex][j],
+                    processedData[dataTypeIndex][j], // dataType
+                    processedData[dataNameIndex][j], // dataName
+                    processedData[dataYAxisIndex][j], // dataYAxis
                     [
                       processedData[0], // time data
                       processedData[j], // other specific data
@@ -105,6 +128,7 @@
             humidex,
             ["time", "light", "humidex"], // dataName
             ["line", "line", "line"], // chart type
+            ["Time", "Light in lumens", "Humidex in °C"],
           ];
         };
 
@@ -128,11 +152,26 @@
           );
         };
 
-        const renderChart = (day, type, dataName, data) => {
+        const renderChart = (day, type, dataName, yAxis, data) => {
           console.log(day, type, dataName, data);
           let options = {
             chart: {
               type: `${type}`,
+              animations: {
+                enabled: false,
+              },
+              toolbar: {
+                show: true,
+                tools: {
+                  download: true,
+                  selection: false,
+                  zoom: true,
+                  zoomin: false,
+                  zoomout: false,
+                  pan: false,
+                  reset: true,
+                },
+              },
             },
             series: [
               {
@@ -142,7 +181,12 @@
             ],
             xaxis: {
               categories: data[0], // time data
-              tickAmount: 25,
+              tickAmount: 15,
+            },
+            yaxis: {
+              title: {
+                text: yAxis,
+              },
             },
             stroke: {
               curve: "smooth",
