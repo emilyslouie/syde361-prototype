@@ -70,36 +70,19 @@
                 // Save each file's data in a separate index
                 filesData.push(result);
               });
-              console.log(filesData);
 
-              // For each day's worth of data, render charts
-              for (let i = 0; i < filesData.length - 1; i++) {
-                // format and process data
-                const processedData = processData(filesData[i].data);
+              // process data and get charts
+              generateChartContent(filesData);
 
-                const dataNameIndex = 3;
-                const dataTypeIndex = 4;
-                const dataYAxisIndex = 5;
-
-                // iterate over each type of data
-                for (let j = 1; j < processedData.length - 3; j++) {
-                  renderChart(
-                    i + 1,
-                    processedData[dataTypeIndex][j], // dataType
-                    processedData[dataNameIndex][j], // dataName
-                    processedData[dataYAxisIndex][j], // dataYAxis
-                    [
-                      processedData[0], // time data
-                      processedData[j], // other specific data
-                    ]
-                  );
-                }
-              }
+              // process data and get daily moods
+              console.log(filesData[filesData.length - 1].data);
             })
             .catch((err) => console.log("Something went wrong:", err));
         };
 
-        const processData = (data) => {
+        // FUNCTIONS TO GET CHARTS
+
+        const processDataForCharts = (data) => {
           let time = [];
           let light = [];
           let humidex = [];
@@ -131,27 +114,6 @@
             ["line", "line", "line"], // chart type
             ["Time", "Light in lumens", "Humidex in °C"], // yAxis name
           ];
-        };
-
-        // round to 1 decimal point
-        const roundValue = (value) => {
-          return Number(value.toFixed(1));
-        };
-
-        const calculateDewPoint = (tempVal, humidityVal) => {
-          return tempVal - (100 - humidityVal) / 5;
-        };
-
-        const calculateHumidex = (tempVal, dewPointVal) => {
-          return roundValue(
-            tempVal +
-              (5 / 9) *
-                (6.11 *
-                  Math.exp(
-                    5417.753 * (1 / 273.16 - 1 / (273.15 + dewPointVal))
-                  ) -
-                  10)
-          );
         };
 
         const renderChart = (day, type, dataName, yAxis, data) => {
@@ -203,6 +165,61 @@
           );
 
           chart.render();
+        };
+
+        const generateChartContent = (data) => {
+          // For each day's worth of data, render charts
+          for (let i = 0; i < data.length - 1; i++) {
+            // format and process data
+            const processedData = processDataForCharts(data[i].data);
+
+            const dataNameIndex = 3;
+            const dataTypeIndex = 4;
+            const dataYAxisIndex = 5;
+
+            // iterate over each type of data
+            for (let j = 1; j < processedData.length - 3; j++) {
+              renderChart(
+                i + 1,
+                processedData[dataTypeIndex][j], // dataType
+                processedData[dataNameIndex][j], // dataName
+                processedData[dataYAxisIndex][j], // dataYAxis
+                [
+                  processedData[0], // time data
+                  processedData[j], // other specific data
+                ]
+              );
+            }
+          }
+        };
+
+        // FUNCTIONS TO GET DAILY MOODS
+
+        const renderDailyMoods = (data) => {};
+
+        const generateDailyMoodsContent = (data) => {};
+
+        // HELPER FUNCTIONS
+
+        // round to 1 decimal point
+        const roundValue = (value) => {
+          return Number(value.toFixed(1));
+        };
+
+        const calculateDewPoint = (tempVal, humidityVal) => {
+          return tempVal - (100 - humidityVal) / 5;
+        };
+
+        const calculateHumidex = (tempVal, dewPointVal) => {
+          return roundValue(
+            tempVal +
+              (5 / 9) *
+                (6.11 *
+                  Math.exp(
+                    5417.753 * (1 / 273.16 - 1 / (273.15 + dewPointVal))
+                  ) -
+                  10)
+          );
         };
 
         parseFiles(filesToParse);
