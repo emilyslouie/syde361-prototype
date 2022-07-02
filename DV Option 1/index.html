@@ -15,11 +15,9 @@
       <div>
         <h2>Day 1</h2>
         <h3>light</h3>
-        <div id="day1-light"></div>
-        <h3>temperature</h3>
-        <div id="day1-temperature"></div>
-        <h3>humidity</h3>
-        <div id="day1-humidity"></div>
+        <div class="chart" id="day1-light"></div>
+        <h3>humidex</h3>
+        <div class="chart" id="day1-humidex"></div>
       </div>
 
       <script type="text/javascript">
@@ -58,12 +56,19 @@
                 const processedData = processData(filesData[i].data);
                 console.log(processedData);
 
+                const dataTypeIndex = 3;
+                const dataNameIndex = 4;
                 // iterate over each type of data
                 for (let j = 1; j < processedData.length - 2; j++) {
-                  renderChart(i + 1, processedData[5][j], processedData[4][j], [
-                    processedData[0], // time data
-                    processedData[j], // other specific data
-                  ]);
+                  renderChart(
+                    i + 1,
+                    processedData[dataNameIndex][j],
+                    processedData[dataTypeIndex][j],
+                    [
+                      processedData[0], // time data
+                      processedData[j], // other specific data
+                    ]
+                  );
                 }
               }
             })
@@ -73,22 +78,54 @@
         const processData = (data) => {
           let time = [];
           let light = [];
+          let humidex = [];
           let humidity = [];
           let temperature = [];
+
+          // add data to arrays so it can be used in chart
           data.map((item) => {
             time.push(item.time);
             light.push(item["light sense"]);
             humidity.push(item.humidity);
             temperature.push(item["temp (C)"]);
           });
+
+          // convert humidity and temperature to humidex
+          for (let i = 0; i < humidity.length; i++) {
+            let humidityVal = humidity[i];
+            let tempVal = temperature[i];
+            let dewPointVal = calculateDewPoint(tempVal, humidityVal);
+            let humidexVal = calculateHumidex(tempVal, dewPointVal);
+            humidex.push(humidexVal);
+          }
+
           return [
             time,
             light,
-            humidity,
-            temperature,
-            ["time", "light", "humidity", "temperature"], // dataName
-            ["line", "line", "line", "line"], // type
+            humidex,
+            ["time", "light", "humidex"], // dataName
+            ["line", "line", "line"], // chart type
           ];
+        };
+
+        const roundValue = (value) => {
+          return Number(value.toFixed(1));
+        };
+
+        const calculateDewPoint = (tempVal, humidityVal) => {
+          return tempVal - (100 - humidityVal) / 5;
+        };
+
+        const calculateHumidex = (tempVal, dewPointVal) => {
+          return roundValue(
+            tempVal +
+              (5 / 9) *
+                (6.11 *
+                  Math.exp(
+                    5417.753 * (1 / 273.16 - 1 / (273.15 + dewPointVal))
+                  ) -
+                  10)
+          );
         };
 
         const renderChart = (day, type, dataName, data) => {
@@ -105,6 +142,13 @@
             ],
             xaxis: {
               categories: data[0], // time data
+              tickAmount: 25,
+            },
+            stroke: {
+              curve: "smooth",
+            },
+            markers: {
+              size: 0,
             },
           };
 
