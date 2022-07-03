@@ -447,6 +447,7 @@
 
         // FUNCTIONS TO GET DAILY MOODS
 
+        // Create HTML elements to render daily mood info
         const renderDailyMoods = (
           day,
           startRating,
@@ -455,6 +456,7 @@
           sleepStart,
           sleepEnd
         ) => {
+          // Render time slept info
           const timeSleptTotalString = `<p class="big-number">${timeSlept}</p>`;
           document
             .getElementById(`day${day}-timeSleptTotal`)
@@ -464,6 +466,7 @@
             .getElementById(`day${day}-timeSlept`)
             .insertAdjacentHTML("beforeend", timeSleptString);
 
+          // Render before sleep ratings
           const startRatingImgString = `<img src="${getRatingImage(
             startRating
           )}">`;
@@ -475,6 +478,7 @@
             .getElementById(`day${day}-startRating`)
             .insertAdjacentHTML("beforeend", startRatingString);
 
+          // Render after sleep ratings
           const endRatingImgString = `<img src="${getRatingImage(endRating)}">`;
           document
             .getElementById(`day${day}-endRatingImg`)
@@ -486,10 +490,13 @@
         };
 
         const generateDailyMoodsContent = (data) => {
+          // Iterate over each day's worth of mood data which is every other row
           for (let i = 0; i < data.length - 1; i += 2) {
+            // isolate start and end objects
             let start = data[i];
             let end = data[i + 1];
 
+            // declare variables to easily read data
             let startTime = start.timestamp;
             let endTime = end.timestamp;
 
@@ -499,7 +506,10 @@
             let startRating = start.rating;
             let endRating = end.rating;
 
+            // calculate total time slept
             let timeSlept = roundValue((endTime - startTime) / 3600);
+
+            // calculate which day the data is for
             let day = (i % 2) + 1;
 
             renderDailyMoods(
@@ -538,15 +548,15 @@
 
         const getRatingImage = (rating) => {
           if (rating === 1) {
-            return "images/rating-1.png";
+            return "images/rating-1.png"; // mega sad face
           } else if (rating === 2) {
-            return "images/rating-2.png";
+            return "images/rating-2.png"; // sad face
           } else if (rating === 3) {
-            return "images/rating-3.png";
+            return "images/rating-3.png"; // ok face
           } else if (rating === 4) {
-            return "images/rating-4.png";
+            return "images/rating-4.png"; // smiley face
           } else if (rating === 5) {
-            return "images/rating-5.png";
+            return "images/rating-5.png"; // mega smiley face
           }
         };
 
