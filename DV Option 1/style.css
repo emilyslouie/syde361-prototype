@@ -85,3 +85,56 @@ th {
   border-bottom: 20px solid white;
   margin-left: 20px;
 }
+.monday-triangle {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid white;
+  /* TODO: change margin -- margin-left: 20px; */
+}
+
+.tuesday-triangle {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid white;
+  /* TODO: change margin -- margin-left: 20px; */
+}
+
+.wednesday-triangle {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid white;
+  /* TODO: change margin -- margin-left: 20px; */
+}
+
+.thursday-triangle {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid white;
+  /* TODO: change margin -- margin-left: 20px; */
+}
+
+.friday-triangle {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid white;
+  /* TODO: change margin -- margin-left: 20px; */
+}
+
+.saturday-triangle {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid white;
+  /* TODO: change margin -- margin-left: 20px; */
+}

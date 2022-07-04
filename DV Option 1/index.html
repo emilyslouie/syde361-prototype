@@ -57,6 +57,90 @@
             </p>
           </div>
         </div>
+        <div id="monday-card" class="info">
+          <div class="monday-triangle"></div>
+          <div class="card">
+            <h2>Monday</h2>
+            <p id="day2-temperature"></p>
+            <p id="day2-humidity"></p>
+            <p id="day2-light"></p>
+            <p id="day2-humidex"></p>
+            <p style="margin-top: 36px">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+        </div>
+        <div id="tuesday-card" class="info">
+          <div class="tuesday-triangle"></div>
+          <div class="card">
+            <h2>Sunday</h2>
+            <p id="day3-temperature"></p>
+            <p id="day3-humidity"></p>
+            <p id="day3-light"></p>
+            <p id="day3-humidex"></p>
+            <p style="margin-top: 36px">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+        </div>
+        <div id="wednesday-card" class="info">
+          <div class="wednesday-triangle"></div>
+          <div class="card">
+            <h2>Wednesday</h2>
+            <p id="day4-temperature"></p>
+            <p id="day4-humidity"></p>
+            <p id="day4-light"></p>
+            <p id="day4-humidex"></p>
+            <p style="margin-top: 36px">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+        </div>
+        <div id="thursday-card" class="info">
+          <div class="thursday-triangle"></div>
+          <div class="card">
+            <h2>Thursday</h2>
+            <p id="day5-temperature"></p>
+            <p id="day5-humidity"></p>
+            <p id="day5-light"></p>
+            <p id="day5-humidex"></p>
+            <p style="margin-top: 36px">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+        </div>
+        <div id="friday-card" class="info">
+          <div class="friday-triangle"></div>
+          <div class="card">
+            <h2>Friday</h2>
+            <p id="day6-temperature"></p>
+            <p id="day6-humidity"></p>
+            <p id="day6-light"></p>
+            <p id="day6-humidex"></p>
+            <p style="margin-top: 36px">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+        </div>
+        <div id="saturday-card" class="info">
+          <div class="saturday-triangle"></div>
+          <div class="card">
+            <h2>Saturday</h2>
+            <p id="day7-temperature"></p>
+            <p id="day7-humidity"></p>
+            <p id="day7-light"></p>
+            <p id="day7-humidex"></p>
+            <p style="margin-top: 36px">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+        </div>
       </div>
     </main>
   </body>
@@ -186,23 +270,22 @@
     // FUNCTIONS TO GET DAILY MOODS
 
     const toggleCard = (day) => {
+      // Get all the cards and hide them
       let allCards = document.getElementById("cards");
       let childCards = allCards.children;
-      console.log(childCards);
 
       for (let i = 0; i < childCards.length; i++) {
         let child = childCards[i];
         child.style.display = "none";
-        console.log(child.style.display);
       }
 
+      // Get the clicked on a card and show it
       let card = document.getElementById(`${day}-card`);
       if (card.style.display === "block") {
         card.style.display = "none";
       } else {
         card.style.display = "block";
       }
-      console.log(day);
     };
 
     // Create HTML elements to render daily mood info
@@ -215,6 +298,7 @@
         .getElementById(`${day}`)
         .insertAdjacentHTML("beforeend", ratingImgString);
 
+      // Render button to get day's info
       const linkString = `<button class="link-button" id="${day}-button">Learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></button>`;
 
       document
