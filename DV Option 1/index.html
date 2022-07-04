@@ -12,22 +12,41 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
+    <script
+      src="https://kit.fontawesome.com/25a68f228e.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script type="text/javascript" src="papaparse.min.js"></script>
   </head>
   <body>
     <main>
       <h1>SYDE 361 - Data Visualizations</h1>
+      <table>
+        <tr>
+          <th>Sunday</th>
+          <th>Monday</th>
+          <th>Tuesday</th>
+          <th>Wednesday</th>
+          <th>Thursday</th>
+          <th>Friday</th>
+          <th>Saturday</th>
+        </tr>
+        <tr>
+          <td id="sunday"><p class="date">26</p></td>
+          <td id="monday"><p class="date">27</p></td>
+          <td id="tuesday"><p class="date">28</p></td>
+          <td id="wednesday"><p class="date">29</p></td>
+          <td id="thursday"><p class="date">30</p></td>
+          <td id="friday"><p class="date">1</p></td>
+          <td id="saturday"><p class="date">2</p></td>
+        </tr>
+      </table>
       <div class="card">
         <h2>Day 1</h2>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
         <div class="content">
           <div class="content-box">
@@ -54,240 +73,6 @@
           <div class="content-box">
             <h3>Humidex</h3>
             <div id="day1-humidex"></div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <h2>Day 2</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-        <div class="content">
-          <div class="content-box">
-            <h3>Hours slept</h3>
-            <div id="day2-timeSleptTotal"></div>
-            <div id="day2-timeSlept"></div>
-          </div>
-          <div class="content-box">
-            <h3>Mood before sleep</h3>
-            <div id="day2-startRatingImg"></div>
-            <div id="day2-startRating"></div>
-          </div>
-          <div class="content-box">
-            <h3>Mood after sleep</h3>
-            <div id="day2-endRatingImg"></div>
-            <div id="day2-endRating"></div>
-          </div>
-        </div>
-        <div class="content">
-          <div class="content-box">
-            <h3>Light</h3>
-            <div id="day2-light"></div>
-          </div>
-          <div class="content-box">
-            <h3>Humidex</h3>
-            <div id="day2-humidex"></div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <h2>Day 3</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-        <div class="content">
-          <div class="content-box">
-            <h3>Hours slept</h3>
-            <div id="day3-timeSleptTotal"></div>
-            <div id="day3-timeSlept"></div>
-          </div>
-          <div class="content-box">
-            <h3>Mood before sleep</h3>
-            <div id="day3-startRatingImg"></div>
-            <div id="day3-startRating"></div>
-          </div>
-          <div class="content-box">
-            <h3>Mood after sleep</h3>
-            <div id="day3-endRatingImg"></div>
-            <div id="day3-endRating"></div>
-          </div>
-        </div>
-        <div class="content">
-          <div class="content-box">
-            <h3>Light</h3>
-            <div id="day3-light"></div>
-          </div>
-          <div class="content-box">
-            <h3>Humidex</h3>
-            <div id="day3-humidex"></div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <h2>Day 4</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-        <div class="content">
-          <div class="content-box">
-            <h3>Hours slept</h3>
-            <div id="day4-timeSleptTotal"></div>
-            <div id="day4-timeSlept"></div>
-          </div>
-          <div class="content-box">
-            <h3>Mood before sleep</h3>
-            <div id="day4-startRatingImg"></div>
-            <div id="day4-startRating"></div>
-          </div>
-          <div class="content-box">
-            <h3>Mood after sleep</h3>
-            <div id="day4-endRatingImg"></div>
-            <div id="day4-endRating"></div>
-          </div>
-        </div>
-        <div class="content">
-          <div class="content-box">
-            <h3>Light</h3>
-            <div id="day4-light"></div>
-          </div>
-          <div class="content-box">
-            <h3>Humidex</h3>
-            <div id="day4-humidex"></div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <h2>Day 5</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-        <div class="content">
-          <div class="content-box">
-            <h3>Hours slept</h3>
-            <div id="day5-timeSleptTotal"></div>
-            <div id="day5-timeSlept"></div>
-          </div>
-          <div class="content-box">
-            <h3>Mood before sleep</h3>
-            <div id="day5-startRatingImg"></div>
-            <div id="day5-startRating"></div>
-          </div>
-          <div class="content-box">
-            <h3>Mood after sleep</h3>
-            <div id="day5-endRatingImg"></div>
-            <div id="day5-endRating"></div>
-          </div>
-        </div>
-        <div class="content">
-          <div class="content-box">
-            <h3>Light</h3>
-            <div id="day5-light"></div>
-          </div>
-          <div class="content-box">
-            <h3>Humidex</h3>
-            <div id="day5-humidex"></div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <h2>Day 6</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-        <div class="content">
-          <div class="content-box">
-            <h3>Hours slept</h3>
-            <div id="day6-timeSleptTotal"></div>
-            <div id="day6-timeSlept"></div>
-          </div>
-          <div class="content-box">
-            <h3>Mood before sleep</h3>
-            <div id="day6-startRatingImg"></div>
-            <div id="day6-startRating"></div>
-          </div>
-          <div class="content-box">
-            <h3>Mood after sleep</h3>
-            <div id="day6-endRatingImg"></div>
-            <div id="day6-endRating"></div>
-          </div>
-        </div>
-        <div class="content">
-          <div class="content-box">
-            <h3>Light</h3>
-            <div id="day6-light"></div>
-          </div>
-          <div class="content-box">
-            <h3>Humidex</h3>
-            <div id="day6-humidex"></div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <h2>Day 7</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-        <div class="content">
-          <div class="content-box">
-            <h3>Hours slept</h3>
-            <div id="day7-timeSleptTotal"></div>
-            <div id="day7-timeSlept"></div>
-          </div>
-          <div class="content-box">
-            <h3>Mood before sleep</h3>
-            <div id="day7-startRatingImg"></div>
-            <div id="day7-startRating"></div>
-          </div>
-          <div class="content-box">
-            <h3>Mood after sleep</h3>
-            <div id="day7-endRatingImg"></div>
-            <div id="day7-endRating"></div>
-          </div>
-        </div>
-        <div class="content">
-          <div class="content-box">
-            <h3>Light</h3>
-            <div id="day7-light"></div>
-          </div>
-          <div class="content-box">
-            <h3>Humidex</h3>
-            <div id="day7-humidex"></div>
           </div>
         </div>
       </div>
@@ -447,79 +232,44 @@
 
         // FUNCTIONS TO GET DAILY MOODS
 
-        // Create HTML elements to render daily mood info
-        const renderDailyMoods = (
-          day,
-          startRating,
-          endRating,
-          timeSlept,
-          sleepStart,
-          sleepEnd
-        ) => {
-          // Render time slept info
-          const timeSleptTotalString = `<p class="big-number">${timeSlept}</p>`;
-          document
-            .getElementById(`day${day}-timeSleptTotal`)
-            .insertAdjacentHTML("beforeend", timeSleptTotalString);
-          const timeSleptString = `<p>${sleepStart} - ${sleepEnd}</p>`;
-          document
-            .getElementById(`day${day}-timeSlept`)
-            .insertAdjacentHTML("beforeend", timeSleptString);
+        const toggleCard = (day) => {
+          console.log(day);
+        };
 
-          // Render before sleep ratings
-          const startRatingImgString = `<img src="${getRatingImage(
-            startRating
+        // Create HTML elements to render daily mood info
+        const renderDailyMoods = (day, rating) => {
+          // Render sleep ratings
+          const ratingImgString = `<img class="rating" src="${getRatingImage(
+            rating
           )}">`;
           document
-            .getElementById(`day${day}-startRatingImg`)
-            .insertAdjacentHTML("beforeend", startRatingImgString);
-          const startRatingString = `<p>${startRating}/5</p>`;
-          document
-            .getElementById(`day${day}-startRating`)
-            .insertAdjacentHTML("beforeend", startRatingString);
+            .getElementById(`${day}`)
+            .insertAdjacentHTML("beforeend", ratingImgString);
 
-          // Render after sleep ratings
-          const endRatingImgString = `<img src="${getRatingImage(endRating)}">`;
+          const linkString = `<button class="link-button" id="${day}-button">Learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></button>`;
+
           document
-            .getElementById(`day${day}-endRatingImg`)
-            .insertAdjacentHTML("beforeend", endRatingImgString);
-          const endRatingString = `<p>${endRating}/5</p>`;
-          document
-            .getElementById(`day${day}-endRating`)
-            .insertAdjacentHTML("beforeend", endRatingString);
+            .getElementById(`${day}`)
+            .insertAdjacentHTML("beforeend", linkString);
+
+          document.getElementById(`${day}-button`).onclick = function () {
+            toggleCard(day);
+          };
         };
 
         const generateDailyMoodsContent = (data) => {
           // Iterate over each day's worth of mood data which is every other row
           for (let i = 0; i < data.length - 1; i += 2) {
             // isolate start and end objects
-            let start = data[i];
             let end = data[i + 1];
 
             // declare variables to easily read data
-            let startTime = start.timestamp;
-            let endTime = end.timestamp;
-
-            let humanStartTime = start.time;
-            let humanEndTime = end.time;
-
-            let startRating = start.rating;
             let endRating = end.rating;
-
-            // calculate total time slept
-            let timeSlept = roundValue((endTime - startTime) / 3600);
 
             // calculate which day the data is for
             let day = (i % 2) + 1;
 
-            renderDailyMoods(
-              day,
-              startRating,
-              endRating,
-              timeSlept,
-              humanStartTime,
-              humanEndTime
-            );
+            renderDailyMoods(getDayOfWeek(day), endRating);
           }
         };
 
@@ -557,6 +307,24 @@
             return "images/rating-4.png"; // smiley face
           } else if (rating === 5) {
             return "images/rating-5.png"; // mega smiley face
+          }
+        };
+
+        const getDayOfWeek = (day) => {
+          if (day === 1) {
+            return "sunday";
+          } else if (day === 2) {
+            return "monday";
+          } else if (day === 3) {
+            return "tuesday";
+          } else if (day === 4) {
+            return "wednesday";
+          } else if (day === 5) {
+            return "thursday";
+          } else if (day === 6) {
+            return "friday";
+          } else if (day === 7) {
+            return "saturday";
           }
         };
 
