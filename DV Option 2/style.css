@@ -1,4 +1,140 @@
-#chart {
-  max-width: 650px;
-  margin: 35px auto;
+body {
+  font-family: "IBM Plex Sans", sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #f2f2f2;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  background: white;
+}
+
+table,
+td,
+th {
+  border: 1px solid;
+}
+
+th {
+  padding: 8px;
+}
+
+.info {
+  display: none;
+}
+
+.card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 4px 16px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+}
+
+.content-box {
+  width: 100%;
+}
+
+.big-number {
+  font-size: 96px;
+  margin-top: 0;
+  margin-bottom: 36px;
+}
+
+.date {
+  text-align: right;
+  margin-right: 8px;
+  margin-top: 4px;
+}
+
+.rating {
+  padding-bottom: 24px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.link-button {
+  background-color: #d9d9d9;
+  border: none;
+  color: black;
+  padding: 12px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.link-button:hover {
+  background-color: #005fcc;
+  color: white;
+}
+
+.sunday-triangle {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid white;
+  margin-left: 20px;
+}
+.monday-triangle {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid white;
+  /* TODO: change margin -- margin-left: 20px; */
+}
+
+.tuesday-triangle {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid white;
+  /* TODO: change margin -- margin-left: 20px; */
+}
+
+.wednesday-triangle {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid white;
+  /* TODO: change margin -- margin-left: 20px; */
+}
+
+.thursday-triangle {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid white;
+  /* TODO: change margin -- margin-left: 20px; */
+}
+
+.friday-triangle {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid white;
+  /* TODO: change margin -- margin-left: 20px; */
+}
+
+.saturday-triangle {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid white;
+  /* TODO: change margin -- margin-left: 20px; */
 }
