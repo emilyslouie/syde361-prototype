@@ -42,294 +42,312 @@
           <td id="saturday"><p class="date">2</p></td>
         </tr>
       </table>
-      <div class="card">
-        <h2>Day 1</h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </p>
-        <div class="content">
-          <div class="content-box">
-            <h3>Hours slept</h3>
-            <div id="day1-timeSleptTotal"></div>
-            <div id="day1-timeSlept"></div>
-          </div>
-          <div class="content-box">
-            <h3>Mood before sleep</h3>
-            <div id="day1-startRatingImg"></div>
-            <div id="day1-startRating"></div>
-          </div>
-          <div class="content-box">
-            <h3>Mood after sleep</h3>
-            <div id="day1-endRatingImg"></div>
-            <div id="day1-endRating"></div>
-          </div>
-        </div>
-        <div class="content">
-          <div class="content-box">
-            <h3>Light</h3>
-            <div id="day1-light"></div>
-          </div>
-          <div class="content-box">
-            <h3>Humidex</h3>
-            <div id="day1-humidex"></div>
+      <div id="cards">
+        <div id="sunday-card" class="info">
+          <div class="sunday-triangle"></div>
+          <div class="card">
+            <h2>Day 1</h2>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+            <div class="content">
+              <div class="content-box">
+                <h3>Hours slept</h3>
+                <div id="day1-timeSleptTotal"></div>
+                <div id="day1-timeSlept"></div>
+              </div>
+              <div class="content-box">
+                <h3>Mood before sleep</h3>
+                <div id="day1-startRatingImg"></div>
+                <div id="day1-startRating"></div>
+              </div>
+              <div class="content-box">
+                <h3>Mood after sleep</h3>
+                <div id="day1-endRatingImg"></div>
+                <div id="day1-endRating"></div>
+              </div>
+            </div>
+            <div class="content">
+              <div class="content-box">
+                <h3>Light</h3>
+                <div id="day1-light"></div>
+              </div>
+              <div class="content-box">
+                <h3>Humidex</h3>
+                <div id="day1-humidex"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
-      <script type="text/javascript">
-        const filesToParse = [
-          "https://emily.louie.ca/syde361-data/Recording_1.csv",
-          "https://emily.louie.ca/syde361-data/daily_mood_ratings.csv",
-          // daily_mood_ratings.csv must be the last one
-        ];
-
-        const parseFiles = (files) => {
-          const filesData = []; // Array to save file data
-          Promise.all(
-            // Parse each file
-            [...files].map(
-              (file) =>
-                new Promise((resolve, reject) =>
-                  Papa.parse(file, {
-                    header: true,
-                    download: true,
-                    dynamicTyping: true,
-                    skipEmptyLines: true,
-                    complete: resolve, // Resolve each promise
-                    error: reject, // Reject if there is an error
-                  })
-                )
-            )
-          )
-            .then((results) => {
-              results.forEach((result, index) => {
-                // Save each file's data in a separate index
-                filesData.push(result);
-              });
-
-              // process data and get charts
-              generateChartContent(filesData);
-
-              // process data and get daily moods
-              generateDailyMoodsContent(filesData[filesData.length - 1].data);
-            })
-            .catch((err) => console.log("Something went wrong:", err));
-        };
-
-        // FUNCTIONS TO GET CHARTS
-
-        const processDataForCharts = (data) => {
-          let time = [];
-          let light = [];
-          let humidex = [];
-          let humidity = [];
-          let temperature = [];
-
-          // add data to arrays so it can be used in chart
-          data.map((item) => {
-            time.push(item.time);
-            light.push(item["light sense"]);
-            humidity.push(item.humidity);
-            temperature.push(item["temp (C)"]);
-          });
-
-          // convert humidity and temperature to humidex
-          for (let i = 0; i < humidity.length; i++) {
-            let humidityVal = humidity[i];
-            let tempVal = temperature[i];
-            let dewPointVal = calculateDewPoint(tempVal, humidityVal);
-            let humidexVal = calculateHumidex(tempVal, dewPointVal);
-            humidex.push(humidexVal);
-          }
-
-          return [
-            time,
-            light,
-            humidex,
-            ["time", "light", "humidex"], // dataName
-            ["line", "line", "line"], // chart type
-            ["Time", "Light in lumens", "Humidex in °C"], // yAxis name
-          ];
-        };
-
-        const renderChart = (day, type, dataName, yAxis, data) => {
-          let options = {
-            chart: {
-              type: `${type}`,
-              animations: {
-                enabled: false,
-              },
-              toolbar: {
-                show: true,
-                tools: {
-                  download: true,
-                  selection: false,
-                  zoom: true,
-                  zoomin: false,
-                  zoomout: false,
-                  pan: false,
-                  reset: true,
-                },
-              },
-            },
-            series: [
-              {
-                name: `${dataName}`,
-                data: data[1], // specific data
-              },
-            ],
-            xaxis: {
-              categories: data[0], // time data
-              tickAmount: 15,
-            },
-            yaxis: {
-              title: {
-                text: yAxis,
-              },
-            },
-            stroke: {
-              curve: "smooth",
-            },
-            markers: {
-              size: 0,
-            },
-          };
-
-          let chart = new ApexCharts(
-            document.querySelector(`#day${day}-${dataName}`),
-            options
-          );
-
-          chart.render();
-        };
-
-        const generateChartContent = (data) => {
-          // For each day's worth of data, render charts
-          for (let i = 0; i < data.length - 1; i++) {
-            // format and process data
-            const processedData = processDataForCharts(data[i].data);
-
-            const dataNameIndex = 3;
-            const dataTypeIndex = 4;
-            const dataYAxisIndex = 5;
-
-            // iterate over each type of data
-            for (let j = 1; j < processedData.length - 3; j++) {
-              renderChart(
-                i + 1,
-                processedData[dataTypeIndex][j], // dataType
-                processedData[dataNameIndex][j], // dataName
-                processedData[dataYAxisIndex][j], // dataYAxis
-                [
-                  processedData[0], // time data
-                  processedData[j], // other specific data
-                ]
-              );
-            }
-          }
-        };
-
-        // FUNCTIONS TO GET DAILY MOODS
-
-        const toggleCard = (day) => {
-          console.log(day);
-        };
-
-        // Create HTML elements to render daily mood info
-        const renderDailyMoods = (day, rating) => {
-          // Render sleep ratings
-          const ratingImgString = `<img class="rating" src="${getRatingImage(
-            rating
-          )}">`;
-          document
-            .getElementById(`${day}`)
-            .insertAdjacentHTML("beforeend", ratingImgString);
-
-          const linkString = `<button class="link-button" id="${day}-button">Learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></button>`;
-
-          document
-            .getElementById(`${day}`)
-            .insertAdjacentHTML("beforeend", linkString);
-
-          document.getElementById(`${day}-button`).onclick = function () {
-            toggleCard(day);
-          };
-        };
-
-        const generateDailyMoodsContent = (data) => {
-          // Iterate over each day's worth of mood data which is every other row
-          for (let i = 0; i < data.length - 1; i += 2) {
-            // isolate start and end objects
-            let end = data[i + 1];
-
-            // declare variables to easily read data
-            let endRating = end.rating;
-
-            // calculate which day the data is for
-            let day = (i % 2) + 1;
-
-            renderDailyMoods(getDayOfWeek(day), endRating);
-          }
-        };
-
-        // HELPER FUNCTIONS
-
-        // round to 1 decimal point
-        const roundValue = (value) => {
-          return Number(value.toFixed(1));
-        };
-
-        const calculateDewPoint = (tempVal, humidityVal) => {
-          return tempVal - (100 - humidityVal) / 5;
-        };
-
-        const calculateHumidex = (tempVal, dewPointVal) => {
-          return roundValue(
-            tempVal +
-              (5 / 9) *
-                (6.11 *
-                  Math.exp(
-                    5417.753 * (1 / 273.16 - 1 / (273.15 + dewPointVal))
-                  ) -
-                  10)
-          );
-        };
-
-        const getRatingImage = (rating) => {
-          if (rating === 1) {
-            return "images/rating-1.png"; // mega sad face
-          } else if (rating === 2) {
-            return "images/rating-2.png"; // sad face
-          } else if (rating === 3) {
-            return "images/rating-3.png"; // ok face
-          } else if (rating === 4) {
-            return "images/rating-4.png"; // smiley face
-          } else if (rating === 5) {
-            return "images/rating-5.png"; // mega smiley face
-          }
-        };
-
-        const getDayOfWeek = (day) => {
-          if (day === 1) {
-            return "sunday";
-          } else if (day === 2) {
-            return "monday";
-          } else if (day === 3) {
-            return "tuesday";
-          } else if (day === 4) {
-            return "wednesday";
-          } else if (day === 5) {
-            return "thursday";
-          } else if (day === 6) {
-            return "friday";
-          } else if (day === 7) {
-            return "saturday";
-          }
-        };
-
-        parseFiles(filesToParse);
-      </script>
     </main>
   </body>
+  <script type="text/javascript">
+    const filesToParse = [
+      "https://emily.louie.ca/syde361-data/Recording_1.csv",
+      "https://emily.louie.ca/syde361-data/daily_mood_ratings.csv",
+      // daily_mood_ratings.csv must be the last one
+    ];
+
+    const parseFiles = (files) => {
+      const filesData = []; // Array to save file data
+      Promise.all(
+        // Parse each file
+        [...files].map(
+          (file) =>
+            new Promise((resolve, reject) =>
+              Papa.parse(file, {
+                header: true,
+                download: true,
+                dynamicTyping: true,
+                skipEmptyLines: true,
+                complete: resolve, // Resolve each promise
+                error: reject, // Reject if there is an error
+              })
+            )
+        )
+      )
+        .then((results) => {
+          results.forEach((result, index) => {
+            // Save each file's data in a separate index
+            filesData.push(result);
+          });
+
+          // process data and get charts
+          generateChartContent(filesData);
+
+          // process data and get daily moods
+          generateDailyMoodsContent(filesData[filesData.length - 1].data);
+        })
+        .catch((err) => console.log("Something went wrong:", err));
+    };
+
+    // FUNCTIONS TO GET CHARTS
+
+    const processDataForCharts = (data) => {
+      let time = [];
+      let light = [];
+      let humidex = [];
+      let humidity = [];
+      let temperature = [];
+
+      // add data to arrays so it can be used in chart
+      data.map((item) => {
+        time.push(item.time);
+        light.push(item["light sense"]);
+        humidity.push(item.humidity);
+        temperature.push(item["temp (C)"]);
+      });
+
+      // convert humidity and temperature to humidex
+      for (let i = 0; i < humidity.length; i++) {
+        let humidityVal = humidity[i];
+        let tempVal = temperature[i];
+        let dewPointVal = calculateDewPoint(tempVal, humidityVal);
+        let humidexVal = calculateHumidex(tempVal, dewPointVal);
+        humidex.push(humidexVal);
+      }
+
+      return [
+        time,
+        light,
+        humidex,
+        ["time", "light", "humidex"], // dataName
+        ["line", "line", "line"], // chart type
+        ["Time", "Light in lumens", "Humidex in °C"], // yAxis name
+      ];
+    };
+
+    const renderChart = (day, type, dataName, yAxis, data) => {
+      let options = {
+        chart: {
+          type: `${type}`,
+          animations: {
+            enabled: false,
+          },
+          toolbar: {
+            show: true,
+            tools: {
+              download: true,
+              selection: false,
+              zoom: true,
+              zoomin: false,
+              zoomout: false,
+              pan: false,
+              reset: true,
+            },
+          },
+        },
+        series: [
+          {
+            name: `${dataName}`,
+            data: data[1], // specific data
+          },
+        ],
+        xaxis: {
+          categories: data[0], // time data
+          tickAmount: 15,
+        },
+        yaxis: {
+          title: {
+            text: yAxis,
+          },
+        },
+        stroke: {
+          curve: "smooth",
+        },
+        markers: {
+          size: 0,
+        },
+      };
+
+      let chart = new ApexCharts(
+        document.querySelector(`#day${day}-${dataName}`),
+        options
+      );
+
+      chart.render();
+    };
+
+    const generateChartContent = (data) => {
+      // For each day's worth of data, render charts
+      for (let i = 0; i < data.length - 1; i++) {
+        // format and process data
+        const processedData = processDataForCharts(data[i].data);
+
+        const dataNameIndex = 3;
+        const dataTypeIndex = 4;
+        const dataYAxisIndex = 5;
+
+        // iterate over each type of data
+        for (let j = 1; j < processedData.length - 3; j++) {
+          renderChart(
+            i + 1,
+            processedData[dataTypeIndex][j], // dataType
+            processedData[dataNameIndex][j], // dataName
+            processedData[dataYAxisIndex][j], // dataYAxis
+            [
+              processedData[0], // time data
+              processedData[j], // other specific data
+            ]
+          );
+        }
+      }
+    };
+
+    // FUNCTIONS TO GET DAILY MOODS
+
+    const toggleCard = (day) => {
+      let allCards = document.getElementById("cards");
+      let childCards = allCards.children;
+      console.log(childCards);
+
+      for (let i = 0; i < childCards.length; i++) {
+        let child = childCards[i];
+        child.style.display = "none";
+        console.log(child.style.display);
+      }
+
+      let card = document.getElementById(`${day}-card`);
+      if (card.style.display === "block") {
+        card.style.display = "none";
+      } else {
+        card.style.display = "block";
+      }
+      console.log(day);
+    };
+
+    // Create HTML elements to render daily mood info
+    const renderDailyMoods = (day, rating) => {
+      // Render sleep ratings
+      const ratingImgString = `<img class="rating" src="${getRatingImage(
+        rating
+      )}">`;
+      document
+        .getElementById(`${day}`)
+        .insertAdjacentHTML("beforeend", ratingImgString);
+
+      const linkString = `<button class="link-button" id="${day}-button">Learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></button>`;
+
+      document
+        .getElementById(`${day}`)
+        .insertAdjacentHTML("beforeend", linkString);
+
+      document.getElementById(`${day}-button`).onclick = function () {
+        toggleCard(day);
+      };
+    };
+
+    const generateDailyMoodsContent = (data) => {
+      // Iterate over each day's worth of mood data which is every other row
+      for (let i = 0; i < data.length - 1; i += 2) {
+        // isolate start and end objects
+        let end = data[i + 1];
+
+        // declare variables to easily read data
+        let endRating = end.rating;
+
+        // calculate which day the data is for
+        let day = (i % 2) + 1;
+
+        renderDailyMoods(getDayOfWeek(day), endRating);
+      }
+    };
+
+    // HELPER FUNCTIONS
+
+    // round to 1 decimal point
+    const roundValue = (value) => {
+      return Number(value.toFixed(1));
+    };
+
+    const calculateDewPoint = (tempVal, humidityVal) => {
+      return tempVal - (100 - humidityVal) / 5;
+    };
+
+    const calculateHumidex = (tempVal, dewPointVal) => {
+      return roundValue(
+        tempVal +
+          (5 / 9) *
+            (6.11 *
+              Math.exp(5417.753 * (1 / 273.16 - 1 / (273.15 + dewPointVal))) -
+              10)
+      );
+    };
+
+    const getRatingImage = (rating) => {
+      if (rating === 1) {
+        return "images/rating-1.png"; // mega sad face
+      } else if (rating === 2) {
+        return "images/rating-2.png"; // sad face
+      } else if (rating === 3) {
+        return "images/rating-3.png"; // ok face
+      } else if (rating === 4) {
+        return "images/rating-4.png"; // smiley face
+      } else if (rating === 5) {
+        return "images/rating-5.png"; // mega smiley face
+      }
+    };
+
+    const getDayOfWeek = (day) => {
+      if (day === 1) {
+        return "sunday";
+      } else if (day === 2) {
+        return "monday";
+      } else if (day === 3) {
+        return "tuesday";
+      } else if (day === 4) {
+        return "wednesday";
+      } else if (day === 5) {
+        return "thursday";
+      } else if (day === 6) {
+        return "friday";
+      } else if (day === 7) {
+        return "saturday";
+      }
+    };
+
+    parseFiles(filesToParse);
+  </script>
 </html>
