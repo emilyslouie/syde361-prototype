@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>DV Option 2</title>
+    <title>DV Option 1</title>
     <link rel="stylesheet" href="./style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,25 +21,25 @@
   </head>
   <body>
     <main>
-      <h1>DV Option 2</h1>
+      <h1>DV Option 1</h1>
       <table>
         <tr>
-          <th>Sunday</th>
-          <th>Monday</th>
-          <th>Tuesday</th>
-          <th>Wednesday</th>
-          <th>Thursday</th>
-          <th>Friday</th>
-          <th>Saturday</th>
+          <th id="sunday-header">Sunday</th>
+          <th id="monday-header">Monday</th>
+          <th id="tuesday-header">Tuesday</th>
+          <th id="wednesday-header">Wednesday</th>
+          <th id="thursday-header">Thursday</th>
+          <th id="friday-header">Friday</th>
+          <th id="saturday-header">Saturday</th>
         </tr>
         <tr>
-          <td id="sunday"><p class="date">26</p></td>
-          <td id="monday"><p class="date">27</p></td>
-          <td id="tuesday"><p class="date">28</p></td>
-          <td id="wednesday"><p class="date">29</p></td>
-          <td id="thursday"><p class="date">30</p></td>
-          <td id="friday"><p class="date">1</p></td>
-          <td id="saturday"><p class="date">2</p></td>
+          <td id="sunday-cell"><p class="date">26</p></td>
+          <td id="monday-cell"><p class="date">27</p></td>
+          <td id="tuesday-cell"><p class="date">28</p></td>
+          <td id="wednesday-cell"><p class="date">29</p></td>
+          <td id="thursday-cell"><p class="date">30</p></td>
+          <td id="friday-cell"><p class="date">1</p></td>
+          <td id="saturday-cell"><p class="date">2</p></td>
         </tr>
       </table>
       <div id="cards">
@@ -286,6 +286,23 @@
       } else {
         card.style.display = "block";
       }
+
+      // Get all the headers/cells and change the background to white
+      let allHeaders = document.getElementsByTagName("th");
+      let allCells = document.getElementsByTagName("td");
+
+      for (let i = 0; i < allHeaders.length; i++) {
+        let header = allHeaders[i];
+        header.style.backgroundColor = "white";
+        let cell = allCells[i];
+        cell.style.backgroundColor = "white";
+      }
+
+      // Get the clicked on day and change background to yellow
+      let header = document.getElementById(`${day}-header`);
+      header.style.backgroundColor = "#FFED8D";
+      let cell = document.getElementById(`${day}-cell`);
+      cell.style.backgroundColor = "#FFED8D";
     };
 
     // Create HTML elements to render daily mood info
@@ -295,14 +312,14 @@
         rating
       )}">`;
       document
-        .getElementById(`${day}`)
+        .getElementById(`${day}-cell`)
         .insertAdjacentHTML("beforeend", ratingImgString);
 
       // Render button to get day's info
       const linkString = `<button class="link-button" id="${day}-button">Learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></button>`;
 
       document
-        .getElementById(`${day}`)
+        .getElementById(`${day}-cell`)
         .insertAdjacentHTML("beforeend", linkString);
 
       document.getElementById(`${day}-button`).onclick = function () {
