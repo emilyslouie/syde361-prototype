@@ -46,38 +46,15 @@
         <div id="sunday-card" class="info">
           <div class="sunday-triangle"></div>
           <div class="card">
-            <h2>Day 1</h2>
-            <p>
+            <h2>Sunday</h2>
+            <p id="day1-temperature"></p>
+            <p id="day1-humidity"></p>
+            <p id="day1-light"></p>
+            <p id="day1-humidex"></p>
+            <p style="margin-top: 36px">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
-            <div class="content">
-              <div class="content-box">
-                <h3>Hours slept</h3>
-                <div id="day1-timeSleptTotal"></div>
-                <div id="day1-timeSlept"></div>
-              </div>
-              <div class="content-box">
-                <h3>Mood before sleep</h3>
-                <div id="day1-startRatingImg"></div>
-                <div id="day1-startRating"></div>
-              </div>
-              <div class="content-box">
-                <h3>Mood after sleep</h3>
-                <div id="day1-endRatingImg"></div>
-                <div id="day1-endRating"></div>
-              </div>
-            </div>
-            <div class="content">
-              <div class="content-box">
-                <h3>Light</h3>
-                <div id="day1-light"></div>
-              </div>
-              <div class="content-box">
-                <h3>Humidex</h3>
-                <div id="day1-humidex"></div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -125,14 +102,14 @@
 
     // FUNCTIONS TO GET CHARTS
 
-    const processDataForCharts = (data) => {
+    const processDataForAverages = (data) => {
       let time = [];
       let light = [];
       let humidex = [];
       let humidity = [];
       let temperature = [];
 
-      // add data to arrays so it can be used in chart
+      // add data to arrays so it can be used to calculate averages
       data.map((item) => {
         time.push(item.time);
         light.push(item["light sense"]);
@@ -149,88 +126,58 @@
         humidex.push(humidexVal);
       }
 
+      // calculate averages for each type of data
+      const avgLight = roundValue(
+        light.reduce((a, b) => a + b, 0) / light.length
+      );
+      const avgHumidex = roundValue(
+        humidex.reduce((a, b) => a + b, 0) / humidex.length
+      );
+      const avgHumidity = roundValue(
+        humidity.reduce((a, b) => a + b, 0) / humidity.length
+      );
+      const avgTemperature = roundValue(
+        temperature.reduce((a, b) => a + b, 0) / temperature.length
+      );
+
       return [
-        time,
-        light,
-        humidex,
-        ["time", "light", "humidex"], // dataName
-        ["line", "line", "line"], // chart type
-        ["Time", "Light in lumens", "Humidex in °C"], // yAxis name
+        avgLight,
+        avgHumidex,
+        avgHumidity,
+        avgTemperature,
+        ["light", "humidex", "humidity", "temperature"], // dataName
+        [
+          "Average light in lumens: ",
+          "Average humidex in °C: ",
+          "Average relative humidity in %: ",
+          "Average temperature in °C: ",
+        ], // dataText
       ];
     };
 
-    const renderChart = (day, type, dataName, yAxis, data) => {
-      let options = {
-        chart: {
-          type: `${type}`,
-          animations: {
-            enabled: false,
-          },
-          toolbar: {
-            show: true,
-            tools: {
-              download: true,
-              selection: false,
-              zoom: true,
-              zoomin: false,
-              zoomout: false,
-              pan: false,
-              reset: true,
-            },
-          },
-        },
-        series: [
-          {
-            name: `${dataName}`,
-            data: data[1], // specific data
-          },
-        ],
-        xaxis: {
-          categories: data[0], // time data
-          tickAmount: 15,
-        },
-        yaxis: {
-          title: {
-            text: yAxis,
-          },
-        },
-        stroke: {
-          curve: "smooth",
-        },
-        markers: {
-          size: 0,
-        },
-      };
-
-      let chart = new ApexCharts(
-        document.querySelector(`#day${day}-${dataName}`),
-        options
-      );
-
-      chart.render();
+    const renderAverages = (day, data, dataName, dataText) => {
+      // Render average for dataName
+      document.getElementById(
+        `day${day}-${dataName}`
+      ).textContent += `${dataText}${data}`;
     };
 
     const generateChartContent = (data) => {
       // For each day's worth of data, render charts
       for (let i = 0; i < data.length - 1; i++) {
         // format and process data
-        const processedData = processDataForCharts(data[i].data);
+        const processedData = processDataForAverages(data[i].data);
 
-        const dataNameIndex = 3;
-        const dataTypeIndex = 4;
-        const dataYAxisIndex = 5;
+        const dataNameIndex = 4;
+        const dataTextIndex = 5;
 
         // iterate over each type of data
-        for (let j = 1; j < processedData.length - 3; j++) {
-          renderChart(
+        for (let j = 0; j < processedData.length - 2; j++) {
+          renderAverages(
             i + 1,
-            processedData[dataTypeIndex][j], // dataType
-            processedData[dataNameIndex][j], // dataName
-            processedData[dataYAxisIndex][j], // dataYAxis
-            [
-              processedData[0], // time data
-              processedData[j], // other specific data
-            ]
+            processedData[j],
+            processedData[dataNameIndex][j],
+            processedData[dataTextIndex][j]
           );
         }
       }
