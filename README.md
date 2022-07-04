@@ -10,11 +10,11 @@ This repository houses the three data visualization prototypes done. They utiliz
 
 ### DV Option 1
 
-This option displays the information in the form of a calendar...
+This option displays the information in the form of a calendar. Each day in the calendar is summarized by the sleep quality rating determined by the user's input. More information about the specific night's sleep can be accessed by clicking the "Learn more" button which toggles a card which displays average information and short text-based summary analyzing the data collected.
 
 ### DV Option 2
 
-This option displays the information in the form of a calendar...
+This option also displays the information in the form of a calendar. Each day in the calendar has the average humidex, temperature, humidity, and light displayed in the cell. More granular information about the specific night's sleep can be accessed by clicking the "Learn more button" which toggles a card which displays line graphs of each environmental factor over the course of the night.
 
 ### DV Option 3
 
