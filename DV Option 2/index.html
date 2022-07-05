@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>DV Option 1</title>
+    <title>DV Option 2</title>
     <link rel="stylesheet" href="./style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,7 +21,7 @@
   </head>
   <body>
     <main>
-      <h1>DV Option 1</h1>
+      <h1>DV Option 2</h1>
       <table>
         <tr>
           <th id="sunday-header">Sunday</th>
@@ -246,6 +246,66 @@
       ).textContent += `${dataText}${data}`;
     };
 
+    const renderAverageCellInfo = (day, data, dataText) => {
+      // Render average for dataName
+      const info = `<p class="cell-info">${dataText}${data}</p>`;
+
+      document
+        .getElementById(`${getDayOfWeek(day)}-cell`)
+        .insertAdjacentHTML("beforeend", info);
+    };
+
+    const renderChart = (day, type, dataName, yAxis, data) => {
+      let options = {
+        chart: {
+          type: `${type}`,
+          animations: {
+            enabled: false,
+          },
+          toolbar: {
+            show: true,
+            tools: {
+              download: true,
+              selection: false,
+              zoom: true,
+              zoomin: false,
+              zoomout: false,
+              pan: false,
+              reset: true,
+            },
+          },
+        },
+        series: [
+          {
+            name: `${dataName}`,
+            data: data[1], // specific data
+          },
+        ],
+        xaxis: {
+          categories: data[0], // time data
+          tickAmount: 15,
+        },
+        yaxis: {
+          title: {
+            text: yAxis,
+          },
+        },
+        stroke: {
+          curve: "smooth",
+        },
+        markers: {
+          size: 0,
+        },
+      };
+
+      let chart = new ApexCharts(
+        document.querySelector(`#day${day}-${dataName}`),
+        options
+      );
+
+      chart.render();
+    };
+
     const generateChartContent = (data) => {
       // For each day's worth of data, render charts
       for (let i = 0; i < data.length - 1; i++) {
@@ -259,8 +319,14 @@
         for (let j = 0; j < processedData.length - 2; j++) {
           renderAverages(
             i + 1,
+            processedData[j], // data
+            processedData[dataNameIndex][j], // dataName
+            processedData[dataTextIndex][j] // dataText
+          );
+
+          renderAverageCellInfo(
+            i + 1,
             processedData[j],
-            processedData[dataNameIndex][j],
             processedData[dataTextIndex][j]
           );
         }
@@ -306,14 +372,19 @@
     };
 
     // Create HTML elements to render daily mood info
-    const renderDailyMoods = (day, rating) => {
+    const renderMoodCellInfo = (day, dayRating, sleepRating) => {
       // Render sleep ratings
-      const ratingImgString = `<img class="rating" src="${getRatingImage(
-        rating
-      )}">`;
+      const dayMood = `<p class="cell-info">Day mood: ${dayRating}</p>`;
+
       document
         .getElementById(`${day}-cell`)
-        .insertAdjacentHTML("beforeend", ratingImgString);
+        .insertAdjacentHTML("beforeend", dayMood);
+
+      const sleepQuality = `<p class="cell-info">Sleep quality: ${sleepRating}</p>`;
+
+      document
+        .getElementById(`${day}-cell`)
+        .insertAdjacentHTML("beforeend", sleepQuality);
 
       // Render button to get day's info
       const linkString = `<button class="link-button" id="${day}-button">Learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></button>`;
@@ -331,15 +402,17 @@
       // Iterate over each day's worth of mood data which is every other row
       for (let i = 0; i < data.length - 1; i += 2) {
         // isolate start and end objects
+        let start = data[i];
         let end = data[i + 1];
 
         // declare variables to easily read data
+        let startRating = start.rating;
         let endRating = end.rating;
 
         // calculate which day the data is for
         let day = (i % 2) + 1;
 
-        renderDailyMoods(getDayOfWeek(day), endRating);
+        renderMoodCellInfo(getDayOfWeek(day), startRating, endRating);
       }
     };
 

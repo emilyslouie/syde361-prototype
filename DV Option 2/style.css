@@ -26,6 +26,11 @@ th {
   display: none;
 }
 
+.cell-info {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
 .card {
   background-color: white;
   border-radius: 8px;
@@ -52,6 +57,7 @@ th {
   text-align: right;
   margin-right: 8px;
   margin-top: 4px;
+  font-weight: 700;
 }
 
 .rating {
