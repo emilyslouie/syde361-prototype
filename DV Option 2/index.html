@@ -47,98 +47,16 @@
           <div class="sunday-triangle"></div>
           <div class="card">
             <h2>Sunday</h2>
-            <p id="day1-temperature"></p>
-            <p id="day1-humidity"></p>
-            <p id="day1-light"></p>
-            <p id="day1-humidex"></p>
-            <p style="margin-top: 36px">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-          </div>
-        </div>
-        <div id="monday-card" class="info">
-          <div class="monday-triangle"></div>
-          <div class="card">
-            <h2>Monday</h2>
-            <p id="day2-temperature"></p>
-            <p id="day2-humidity"></p>
-            <p id="day2-light"></p>
-            <p id="day2-humidex"></p>
-            <p style="margin-top: 36px">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-          </div>
-        </div>
-        <div id="tuesday-card" class="info">
-          <div class="tuesday-triangle"></div>
-          <div class="card">
-            <h2>Sunday</h2>
-            <p id="day3-temperature"></p>
-            <p id="day3-humidity"></p>
-            <p id="day3-light"></p>
-            <p id="day3-humidex"></p>
-            <p style="margin-top: 36px">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-          </div>
-        </div>
-        <div id="wednesday-card" class="info">
-          <div class="wednesday-triangle"></div>
-          <div class="card">
-            <h2>Wednesday</h2>
-            <p id="day4-temperature"></p>
-            <p id="day4-humidity"></p>
-            <p id="day4-light"></p>
-            <p id="day4-humidex"></p>
-            <p style="margin-top: 36px">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-          </div>
-        </div>
-        <div id="thursday-card" class="info">
-          <div class="thursday-triangle"></div>
-          <div class="card">
-            <h2>Thursday</h2>
-            <p id="day5-temperature"></p>
-            <p id="day5-humidity"></p>
-            <p id="day5-light"></p>
-            <p id="day5-humidex"></p>
-            <p style="margin-top: 36px">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-          </div>
-        </div>
-        <div id="friday-card" class="info">
-          <div class="friday-triangle"></div>
-          <div class="card">
-            <h2>Friday</h2>
-            <p id="day6-temperature"></p>
-            <p id="day6-humidity"></p>
-            <p id="day6-light"></p>
-            <p id="day6-humidex"></p>
-            <p style="margin-top: 36px">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-          </div>
-        </div>
-        <div id="saturday-card" class="info">
-          <div class="saturday-triangle"></div>
-          <div class="card">
-            <h2>Saturday</h2>
-            <p id="day7-temperature"></p>
-            <p id="day7-humidity"></p>
-            <p id="day7-light"></p>
-            <p id="day7-humidex"></p>
-            <p style="margin-top: 36px">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
+            <p id="day1-sleep"></p>
+            <p id="day1-mood"></p>
+            <div class="content">
+              <div class="content-box" id="day1-temperature-graph"></div>
+              <div class="content-box" id="day1-humidity-graph"></div>
+            </div>
+            <div class="content">
+              <div class="content-box" id="day1-humidex-graph"></div>
+              <div class="content-box" id="day1-light-graph"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -179,14 +97,14 @@
           generateChartContent(filesData);
 
           // process data and get daily moods
-          generateDailyMoodsContent(filesData[filesData.length - 1].data);
+          generateMoodsContent(filesData[filesData.length - 1].data);
         })
         .catch((err) => console.log("Something went wrong:", err));
     };
 
     // FUNCTIONS TO GET CHARTS
 
-    const processDataForAverages = (data) => {
+    const processData = (data) => {
       let time = [];
       let light = [];
       let humidex = [];
@@ -225,17 +143,24 @@
       );
 
       return [
-        avgLight,
-        avgHumidex,
-        avgHumidity,
-        avgTemperature,
-        ["light", "humidex", "humidity", "temperature"], // dataName
+        [time, light, humidex, humidity, temperature], // raw data
+        [time, avgLight, avgHumidex, avgHumidity, avgTemperature], // average data
+        ["time", "light", "humidex", "humidity", "temperature"], // dataName
         [
-          "Average light in lumens: ",
+          "time: ",
+          "Average light in lux: ",
           "Average humidex in °C: ",
           "Average relative humidity in %: ",
           "Average temperature in °C: ",
         ], // dataText
+        ["line", "line", "line", "line", "line"], // type
+        [
+          "time: ",
+          "Light in lux",
+          "Humidex in °C",
+          "Relative humidity in %",
+          "Temperature in °C",
+        ], // yAxis
       ];
     };
 
@@ -299,7 +224,7 @@
       };
 
       let chart = new ApexCharts(
-        document.querySelector(`#day${day}-${dataName}`),
+        document.querySelector(`#day${day}-${dataName}-graph`),
         options
       );
 
@@ -310,24 +235,37 @@
       // For each day's worth of data, render charts
       for (let i = 0; i < data.length - 1; i++) {
         // format and process data
-        const processedData = processDataForAverages(data[i].data);
+        const processedData = processData(data[i].data);
 
-        const dataNameIndex = 4;
-        const dataTextIndex = 5;
+        const dataNameIndex = 2;
+        const dataTextIndex = 3;
+        const dataTypeIndex = 4;
+        const yAxisIndex = 5;
+
+        const rawData = processedData[0];
+        const averageData = processedData[1];
 
         // iterate over each type of data
-        for (let j = 0; j < processedData.length - 2; j++) {
-          renderAverages(
-            i + 1,
-            processedData[j], // data
-            processedData[dataNameIndex][j], // dataName
-            processedData[dataTextIndex][j] // dataText
-          );
+        for (let j = 1; j < averageData.length; j++) {
+          // renderAverages(
+          //   i + 1,
+          //   averageData[j], // data
+          //   processedData[dataNameIndex][j], // dataName
+          //   processedData[dataTextIndex][j] // dataText
+          // );
 
           renderAverageCellInfo(
             i + 1,
-            processedData[j],
-            processedData[dataTextIndex][j]
+            averageData[j], // data
+            processedData[dataTextIndex][j] // dataText
+          );
+
+          renderChart(
+            i + 1,
+            processedData[dataTypeIndex][j],
+            processedData[dataNameIndex][j],
+            processedData[yAxisIndex][j],
+            [rawData[0], rawData[j]]
           );
         }
       }
@@ -372,7 +310,7 @@
     };
 
     // Create HTML elements to render daily mood info
-    const renderMoodCellInfo = (day, dayRating, sleepRating) => {
+    const renderMoodCellInfo = (day, dayNum, dayRating, sleepRating) => {
       // Render sleep ratings
       const dayMood = `<p class="cell-info">Day mood: ${dayRating}</p>`;
 
@@ -386,6 +324,15 @@
         .getElementById(`${day}-cell`)
         .insertAdjacentHTML("beforeend", sleepQuality);
 
+      // Render sleep and day rating in card
+      document.getElementById(
+        `day${dayNum}-mood`
+      ).textContent += `Day mood: ${dayRating}`;
+
+      document.getElementById(
+        `day${dayNum}-sleep`
+      ).textContent += `Sleep quality: ${sleepRating}`;
+
       // Render button to get day's info
       const linkString = `<button class="link-button" id="${day}-button">Learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></button>`;
 
@@ -398,7 +345,7 @@
       };
     };
 
-    const generateDailyMoodsContent = (data) => {
+    const generateMoodsContent = (data) => {
       // Iterate over each day's worth of mood data which is every other row
       for (let i = 0; i < data.length - 1; i += 2) {
         // isolate start and end objects
@@ -412,7 +359,7 @@
         // calculate which day the data is for
         let day = (i % 2) + 1;
 
-        renderMoodCellInfo(getDayOfWeek(day), startRating, endRating);
+        renderMoodCellInfo(getDayOfWeek(day), day, startRating, endRating);
       }
     };
 
