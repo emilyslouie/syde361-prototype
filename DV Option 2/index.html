@@ -205,6 +205,10 @@
             name: `${dataName}`,
             data: data[1], // specific data
           },
+          {
+            name: `average ${dataName}`,
+            data: data[2], // specific data average
+          },
         ],
         xaxis: {
           categories: data[0], // time data
@@ -247,13 +251,9 @@
 
         // iterate over each type of data
         for (let j = 1; j < averageData.length; j++) {
-          // renderAverages(
-          //   i + 1,
-          //   averageData[j], // data
-          //   processedData[dataNameIndex][j], // dataName
-          //   processedData[dataTextIndex][j] // dataText
-          // );
-
+          const projectedAverageData = Array(rawData[0].length).fill(
+            averageData[j]
+          );
           renderAverageCellInfo(
             i + 1,
             averageData[j], // data
@@ -265,7 +265,7 @@
             processedData[dataTypeIndex][j],
             processedData[dataNameIndex][j],
             processedData[yAxisIndex][j],
-            [rawData[0], rawData[j]]
+            [rawData[0], rawData[j], projectedAverageData]
           );
         }
       }
