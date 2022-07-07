@@ -260,13 +260,6 @@
       ];
     };
 
-    const renderAverages = (day, data, dataName, dataText) => {
-      // Render average for dataName
-      document.getElementById(
-        `day${day}-${dataName}`
-      ).textContent += `${dataText}${data}`;
-    };
-
     const renderAverageCellInfo = (day, data, dataText) => {
       // Render average for dataName
       const info = `<p class="cell-info">${dataText}${data}</p>`;
