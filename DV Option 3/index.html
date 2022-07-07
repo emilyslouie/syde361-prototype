@@ -295,6 +295,12 @@
       <script type="text/javascript">
         const filesToParse = [
           "https://emily.louie.ca/syde361-data/Recording_1.csv",
+          "https://emily.louie.ca/syde361-data/Recording_2.csv",
+          "https://emily.louie.ca/syde361-data/Recording_3.csv",
+          "https://emily.louie.ca/syde361-data/Recording_4.csv",
+          "https://emily.louie.ca/syde361-data/Recording_5.csv",
+          "https://emily.louie.ca/syde361-data/Recording_6.csv",
+          "https://emily.louie.ca/syde361-data/Recording_7.csv",
           "https://emily.louie.ca/syde361-data/daily_mood_ratings.csv",
           // daily_mood_ratings.csv must be the last one
         ];
@@ -344,8 +350,8 @@
           // add data to arrays so it can be used in chart
           data.map((item) => {
             time.push(item.time);
-            light.push(item["light sense"]);
-            humidity.push(item.humidity);
+            light.push(item["brightness (lux)"]);
+            humidity.push(item["% humidity"]);
             temperature.push(item["temp (C)"]);
           });
 
