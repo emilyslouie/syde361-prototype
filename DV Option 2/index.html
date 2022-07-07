@@ -59,6 +59,102 @@
             </div>
           </div>
         </div>
+        <div id="monday-card" class="info">
+          <div class="monday-triangle"></div>
+          <div class="card">
+            <h2>Monday</h2>
+            <p id="day2-sleep"></p>
+            <p id="day2-mood"></p>
+            <div class="content">
+              <div class="content-box" id="day2-temperature-graph"></div>
+              <div class="content-box" id="day2-humidity-graph"></div>
+            </div>
+            <div class="content">
+              <div class="content-box" id="day2-humidex-graph"></div>
+              <div class="content-box" id="day2-light-graph"></div>
+            </div>
+          </div>
+        </div>
+        <div id="tuesday-card" class="info">
+          <div class="tuesday-triangle"></div>
+          <div class="card">
+            <h2>Tuesday</h2>
+            <p id="day3-sleep"></p>
+            <p id="day3-mood"></p>
+            <div class="content">
+              <div class="content-box" id="day3-temperature-graph"></div>
+              <div class="content-box" id="day3-humidity-graph"></div>
+            </div>
+            <div class="content">
+              <div class="content-box" id="day3-humidex-graph"></div>
+              <div class="content-box" id="day3-light-graph"></div>
+            </div>
+          </div>
+        </div>
+        <div id="wednesday-card" class="info">
+          <div class="wednesday-triangle"></div>
+          <div class="card">
+            <h2>Tuesday</h2>
+            <p id="day4-sleep"></p>
+            <p id="day4-mood"></p>
+            <div class="content">
+              <div class="content-box" id="day4-temperature-graph"></div>
+              <div class="content-box" id="day4-humidity-graph"></div>
+            </div>
+            <div class="content">
+              <div class="content-box" id="day4-humidex-graph"></div>
+              <div class="content-box" id="day4-light-graph"></div>
+            </div>
+          </div>
+        </div>
+        <div id="thursday-card" class="info">
+          <div class="thursday-triangle"></div>
+          <div class="card">
+            <h2>Tuesday</h2>
+            <p id="day5-sleep"></p>
+            <p id="day5-mood"></p>
+            <div class="content">
+              <div class="content-box" id="day5-temperature-graph"></div>
+              <div class="content-box" id="day5-humidity-graph"></div>
+            </div>
+            <div class="content">
+              <div class="content-box" id="day5-humidex-graph"></div>
+              <div class="content-box" id="day5-light-graph"></div>
+            </div>
+          </div>
+        </div>
+        <div id="friday-card" class="info">
+          <div class="friday-triangle"></div>
+          <div class="card">
+            <h2>Tuesday</h2>
+            <p id="day6-sleep"></p>
+            <p id="day6-mood"></p>
+            <div class="content">
+              <div class="content-box" id="day6-temperature-graph"></div>
+              <div class="content-box" id="day6-humidity-graph"></div>
+            </div>
+            <div class="content">
+              <div class="content-box" id="day6-humidex-graph"></div>
+              <div class="content-box" id="day6-light-graph"></div>
+            </div>
+          </div>
+        </div>
+        <div id="saturday-card" class="info">
+          <div class="saturday-triangle"></div>
+          <div class="card">
+            <h2>Tuesday</h2>
+            <p id="day7-sleep"></p>
+            <p id="day7-mood"></p>
+            <div class="content">
+              <div class="content-box" id="day7-temperature-graph"></div>
+              <div class="content-box" id="day7-humidity-graph"></div>
+            </div>
+            <div class="content">
+              <div class="content-box" id="day7-humidex-graph"></div>
+              <div class="content-box" id="day7-light-graph"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   </body>
@@ -357,7 +453,7 @@
         let endRating = end.rating;
 
         // calculate which day the data is for
-        let day = (i % 2) + 1;
+        let day = i / 2 + 1;
 
         renderMoodCellInfo(getDayOfWeek(day), day, startRating, endRating);
       }

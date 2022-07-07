@@ -510,7 +510,7 @@
             let timeSlept = roundValue((endTime - startTime) / 3600);
 
             // calculate which day the data is for
-            let day = (i % 2) + 1;
+            let day = i / 2 + 1;
 
             renderDailyMoods(
               day,

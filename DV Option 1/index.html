@@ -337,7 +337,7 @@
         let endRating = end.rating;
 
         // calculate which day the data is for
-        let day = (i % 2) + 1;
+        let day = i / 2 + 1;
 
         renderDailyMoods(getDayOfWeek(day), endRating);
       }

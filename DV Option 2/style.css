@@ -98,7 +98,7 @@ th {
   border-left: 20px solid transparent;
   border-right: 20px solid transparent;
   border-bottom: 20px solid white;
-  /* TODO: change margin -- margin-left: 20px; */
+  margin-left: 180px;
 }
 
 .tuesday-triangle {
@@ -107,7 +107,7 @@ th {
   border-left: 20px solid transparent;
   border-right: 20px solid transparent;
   border-bottom: 20px solid white;
-  /* TODO: change margin -- margin-left: 20px; */
+  margin-left: 360px;
 }
 
 .wednesday-triangle {
@@ -116,7 +116,7 @@ th {
   border-left: 20px solid transparent;
   border-right: 20px solid transparent;
   border-bottom: 20px solid white;
-  /* TODO: change margin -- margin-left: 20px; */
+  margin-left: 540px;
 }
 
 .thursday-triangle {
@@ -125,7 +125,7 @@ th {
   border-left: 20px solid transparent;
   border-right: 20px solid transparent;
   border-bottom: 20px solid white;
-  /* TODO: change margin -- margin-left: 20px; */
+  margin-left: 720px;
 }
 
 .friday-triangle {
@@ -134,7 +134,7 @@ th {
   border-left: 20px solid transparent;
   border-right: 20px solid transparent;
   border-bottom: 20px solid white;
-  /* TODO: change margin -- margin-left: 20px; */
+  margin-left: 900px;
 }
 
 .saturday-triangle {
@@ -143,5 +143,5 @@ th {
   border-left: 20px solid transparent;
   border-right: 20px solid transparent;
   border-bottom: 20px solid white;
-  /* TODO: change margin -- margin-left: 20px; */
+  margin-left: 1200px;
 }
