@@ -18,6 +18,46 @@
   <body>
     <main>
       <h1>DV Option 3</h1>
+      <h2>What is sleep and why is it important?</h2>
+      <p>
+        Sleep is a mandatory state of rest designed to restore energy and
+        wellbeing. Sleep is responsible for brain health through memory storage,
+        clearing out toxins, and allowing the brain to recover from stress as
+        well as body health, impacting growth, hormones, and the immune system
+        [1][2][3]. It has been shown that not getting enough sleep at night can
+        be detrimental to both physical and mental health, leading to higher
+        risk of obesity, heart disease, and decreased focus [3]. Since sleep
+        serves as the foundation for our wellbeing, it's important that we get a
+        good night's sleep every night.
+      </p>
+      <h2>What are some factors that affect sleep?</h2>
+      <p>
+        Light is a major contributing factor to a complete sleep and well-rested
+        person. One article states, “natural daylight…has previously been shown
+        to…improve sleep quality… [and] each additional hour spent outdoors
+        advanced sleep by ~30 min” [4]. However, “later exposure to light >10
+        lux had more nocturnal awakenings” [4]. This means that any light
+        greater than 10 lux (1 lumen/m2) while sleeping would cause worse
+        sleeping conditions and therefore contribute to a shorter sleep duration
+        and poorer sleep quality.
+      </p>
+      <p>
+        Temperature and humidity are two other major contributing factors to
+        one's sleep. A study on Turkish university students showed that room
+        scents, including humidity, caused poorer sleep in 53.1% of participants
+        [5]. In another study, it showed that 24.8 degrees celsius was the most
+        comfortable temperature for participants, meaning that any large
+        incremental differences above or below this temperature would cause a
+        change in sleep [6].
+      </p>
+      <p style="margin-top: 36px; margin-bottom: 36px">
+        To better understand the relationship between these environmental
+        factors and sleep, a week of data collection was conducted.
+        Environmental conditions including light, temperature, and humidity,
+        were collected during one's sleep, as well as recording self-reported
+        moods before and after rest, and overall sleep duration. The data that
+        was collected for an individual is presented below.
+      </p>
       <div class="card">
         <h2>Sunday</h2>
         <p>
@@ -284,283 +324,317 @@
           </div>
         </div>
       </div>
+      <h2 style="margin-top: 36px">References</h2>
+      <p>
+        [1] “How Sleep Clears the Brain.” NIH Research Matters. 28-Oct-2013.
+        https://www.nih.gov/news-events/nih-research-matters/how-sleep-clears-brain.
+        [Online]. (Accessed 08-July-2022).
+      </p>
+      <p>
+        [2] “Sleep and your health.” MedlinePlus.
+        https://medlineplus.gov/ency/patientinstructions/000871.htm. [Online].
+        (Accessed 08-July-2022).
+      </p>
+      <p>
+        [3] “The Benefits of Slumber: Why you need a good night's sleep.” News
+        in Health. Apr-2013.
+        https://newsinhealth.nih.gov/2013/04/benefits-slumber. [Online].
+        (Accessed 08-July-2022).
+      </p>
+      <p>
+        [4] C. Blume, C. Garbazza, M. Spitschan. “Effects of light on human
+        circadian rhythm, sleep and mood.” National Library of Medicine. 2019.
+        https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6751071/. [Online].
+        (Accessed 05-July-2022).
+      </p>
+      <p>
+        [5] I. Altun, N. Cinar, C. Dede. “The contributing factors to poor sleep
+        experiences in according to the university students: A cross-sectional
+        study.” National Library of Medicine.
+        https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3634295/. [Online].
+        (Accessed 05-July-2022).
+      </p>
+      <p>
+        [6] X. Xu, Z. Lian, et. Al. “Environmental factors affecting sleep
+        quality in summer: a field study in Shanghai, China.” ScienceDirect:
+        Journal of Thermal Biology.
+        https://www.sciencedirect.com/science/article/abs/pii/S0306456521001455.
+        [Online]. (Accessed 05-July-2022).
+      </p>
+    </main>
+    <script type="text/javascript">
+      const filesToParse = [
+        "https://emily.louie.ca/syde361-data/Recording_1.csv",
+        "https://emily.louie.ca/syde361-data/Recording_2.csv",
+        "https://emily.louie.ca/syde361-data/Recording_3.csv",
+        "https://emily.louie.ca/syde361-data/Recording_4.csv",
+        "https://emily.louie.ca/syde361-data/Recording_5.csv",
+        "https://emily.louie.ca/syde361-data/Recording_6.csv",
+        "https://emily.louie.ca/syde361-data/Recording_7.csv",
+        "https://emily.louie.ca/syde361-data/daily_mood_ratings.csv",
+        // daily_mood_ratings.csv must be the last one
+      ];
 
-      <script type="text/javascript">
-        const filesToParse = [
-          "https://emily.louie.ca/syde361-data/Recording_1.csv",
-          "https://emily.louie.ca/syde361-data/Recording_2.csv",
-          "https://emily.louie.ca/syde361-data/Recording_3.csv",
-          "https://emily.louie.ca/syde361-data/Recording_4.csv",
-          "https://emily.louie.ca/syde361-data/Recording_5.csv",
-          "https://emily.louie.ca/syde361-data/Recording_6.csv",
-          "https://emily.louie.ca/syde361-data/Recording_7.csv",
-          "https://emily.louie.ca/syde361-data/daily_mood_ratings.csv",
-          // daily_mood_ratings.csv must be the last one
-        ];
-
-        const parseFiles = (files) => {
-          const filesData = []; // Array to save file data
-          Promise.all(
-            // Parse each file
-            [...files].map(
-              (file) =>
-                new Promise((resolve, reject) =>
-                  Papa.parse(file, {
-                    header: true,
-                    download: true,
-                    dynamicTyping: true,
-                    skipEmptyLines: true,
-                    complete: resolve, // Resolve each promise
-                    error: reject, // Reject if there is an error
-                  })
-                )
-            )
-          )
-            .then((results) => {
-              results.forEach((result, index) => {
-                // Save each file's data in a separate index
-                filesData.push(result);
-              });
-
-              // process data and get charts
-              generateChartContent(filesData);
-
-              // process data and get daily moods
-              generateDailyMoodsContent(filesData[filesData.length - 1].data);
-            })
-            .catch((err) => console.log("Something went wrong:", err));
-        };
-
-        // FUNCTIONS TO GET CHARTS
-
-        const processDataForCharts = (data) => {
-          let time = [];
-          let light = [];
-          let humidex = [];
-          let humidity = [];
-          let temperature = [];
-
-          // add data to arrays so it can be used in chart
-          data.map((item) => {
-            time.push(item.time);
-            light.push(item["brightness (lux)"]);
-            humidity.push(item["% humidity"]);
-            temperature.push(item["temp (C)"]);
-          });
-
-          // convert humidity and temperature to humidex
-          for (let i = 0; i < humidity.length; i++) {
-            let humidityVal = humidity[i];
-            let tempVal = temperature[i];
-            let dewPointVal = calculateDewPoint(tempVal, humidityVal);
-            let humidexVal = calculateHumidex(tempVal, dewPointVal);
-            humidex.push(humidexVal);
-          }
-
-          return [
-            time,
-            light,
-            humidex,
-            ["time", "light", "humidex"], // dataName
-            ["line", "line", "line"], // chart type
-            ["Time", "Light in lux", "Humidex in °C"], // yAxis name
-          ];
-        };
-
-        const renderChart = (day, type, dataName, yAxis, data) => {
-          let options = {
-            chart: {
-              type: `${type}`,
-              animations: {
-                enabled: false,
-              },
-              toolbar: {
-                show: true,
-                tools: {
+      const parseFiles = (files) => {
+        const filesData = []; // Array to save file data
+        Promise.all(
+          // Parse each file
+          [...files].map(
+            (file) =>
+              new Promise((resolve, reject) =>
+                Papa.parse(file, {
+                  header: true,
                   download: true,
-                  selection: false,
-                  zoom: true,
-                  zoomin: false,
-                  zoomout: false,
-                  pan: false,
-                  reset: true,
-                },
+                  dynamicTyping: true,
+                  skipEmptyLines: true,
+                  complete: resolve, // Resolve each promise
+                  error: reject, // Reject if there is an error
+                })
+              )
+          )
+        )
+          .then((results) => {
+            results.forEach((result, index) => {
+              // Save each file's data in a separate index
+              filesData.push(result);
+            });
+
+            // process data and get charts
+            generateChartContent(filesData);
+
+            // process data and get daily moods
+            generateDailyMoodsContent(filesData[filesData.length - 1].data);
+          })
+          .catch((err) => console.log("Something went wrong:", err));
+      };
+
+      // FUNCTIONS TO GET CHARTS
+
+      const processDataForCharts = (data) => {
+        let time = [];
+        let light = [];
+        let humidex = [];
+        let humidity = [];
+        let temperature = [];
+
+        // add data to arrays so it can be used in chart
+        data.map((item) => {
+          time.push(item.time);
+          light.push(item["brightness (lux)"]);
+          humidity.push(item["% humidity"]);
+          temperature.push(item["temp (C)"]);
+        });
+
+        // convert humidity and temperature to humidex
+        for (let i = 0; i < humidity.length; i++) {
+          let humidityVal = humidity[i];
+          let tempVal = temperature[i];
+          let dewPointVal = calculateDewPoint(tempVal, humidityVal);
+          let humidexVal = calculateHumidex(tempVal, dewPointVal);
+          humidex.push(humidexVal);
+        }
+
+        return [
+          time,
+          light,
+          humidex,
+          ["time", "light", "humidex"], // dataName
+          ["line", "line", "line"], // chart type
+          ["Time", "Light in lux", "Humidex in °C"], // yAxis name
+        ];
+      };
+
+      const renderChart = (day, type, dataName, yAxis, data) => {
+        let options = {
+          chart: {
+            type: `${type}`,
+            animations: {
+              enabled: false,
+            },
+            toolbar: {
+              show: true,
+              tools: {
+                download: true,
+                selection: false,
+                zoom: true,
+                zoomin: false,
+                zoomout: false,
+                pan: false,
+                reset: true,
               },
             },
-            series: [
-              {
-                name: `${dataName}`,
-                data: data[1], // specific data
-              },
-            ],
-            xaxis: {
-              categories: data[0], // time data
-              tickAmount: 15,
+          },
+          series: [
+            {
+              name: `${dataName}`,
+              data: data[1], // specific data
             },
-            yaxis: {
-              title: {
-                text: yAxis,
-              },
+          ],
+          xaxis: {
+            categories: data[0], // time data
+            tickAmount: 15,
+          },
+          yaxis: {
+            title: {
+              text: yAxis,
             },
-            stroke: {
-              curve: "smooth",
-            },
-            markers: {
-              size: 0,
-            },
-          };
-
-          let chart = new ApexCharts(
-            document.querySelector(`#day${day}-${dataName}`),
-            options
-          );
-
-          chart.render();
+          },
+          stroke: {
+            curve: "smooth",
+          },
+          markers: {
+            size: 0,
+          },
         };
 
-        const generateChartContent = (data) => {
-          // For each day's worth of data, render charts
-          for (let i = 0; i < data.length - 1; i++) {
-            // format and process data
-            const processedData = processDataForCharts(data[i].data);
+        let chart = new ApexCharts(
+          document.querySelector(`#day${day}-${dataName}`),
+          options
+        );
 
-            const dataNameIndex = 3;
-            const dataTypeIndex = 4;
-            const dataYAxisIndex = 5;
+        chart.render();
+      };
 
-            // iterate over each type of data
-            for (let j = 1; j < processedData.length - 3; j++) {
-              renderChart(
-                i + 1,
-                processedData[dataTypeIndex][j], // dataType
-                processedData[dataNameIndex][j], // dataName
-                processedData[dataYAxisIndex][j], // dataYAxis
-                [
-                  processedData[0], // time data
-                  processedData[j], // other specific data
-                ]
-              );
-            }
-          }
-        };
+      const generateChartContent = (data) => {
+        // For each day's worth of data, render charts
+        for (let i = 0; i < data.length - 1; i++) {
+          // format and process data
+          const processedData = processDataForCharts(data[i].data);
 
-        // FUNCTIONS TO GET DAILY MOODS
+          const dataNameIndex = 3;
+          const dataTypeIndex = 4;
+          const dataYAxisIndex = 5;
 
-        // Create HTML elements to render daily mood info
-        const renderDailyMoods = (
-          day,
-          startRating,
-          endRating,
-          timeSlept,
-          sleepStart,
-          sleepEnd
-        ) => {
-          // Render time slept info
-          const timeSleptTotalString = `<p class="big-number">${timeSlept}</p>`;
-          document
-            .getElementById(`day${day}-timeSleptTotal`)
-            .insertAdjacentHTML("beforeend", timeSleptTotalString);
-          const timeSleptString = `<p>${sleepStart} - ${sleepEnd}</p>`;
-          document
-            .getElementById(`day${day}-timeSlept`)
-            .insertAdjacentHTML("beforeend", timeSleptString);
-
-          // Render before sleep ratings
-          const startRatingImgString = `<img src="${getRatingImage(
-            startRating
-          )}">`;
-          document
-            .getElementById(`day${day}-startRatingImg`)
-            .insertAdjacentHTML("beforeend", startRatingImgString);
-          const startRatingString = `<p>${startRating}/5</p>`;
-          document
-            .getElementById(`day${day}-startRating`)
-            .insertAdjacentHTML("beforeend", startRatingString);
-
-          // Render after sleep ratings
-          const endRatingImgString = `<img src="${getRatingImage(endRating)}">`;
-          document
-            .getElementById(`day${day}-endRatingImg`)
-            .insertAdjacentHTML("beforeend", endRatingImgString);
-          const endRatingString = `<p>${endRating}/5</p>`;
-          document
-            .getElementById(`day${day}-endRating`)
-            .insertAdjacentHTML("beforeend", endRatingString);
-        };
-
-        const generateDailyMoodsContent = (data) => {
-          // Iterate over each day's worth of mood data which is every other row
-          for (let i = 0; i < data.length - 1; i += 2) {
-            // isolate start and end objects
-            let start = data[i];
-            let end = data[i + 1];
-
-            // declare variables to easily read data
-            let startTime = start.timestamp;
-            let endTime = end.timestamp;
-
-            let humanStartTime = start.time;
-            let humanEndTime = end.time;
-
-            let startRating = start.rating;
-            let endRating = end.rating;
-
-            // calculate total time slept
-            let timeSlept = roundValue((endTime - startTime) / 3600);
-
-            // calculate which day the data is for
-            let day = i / 2 + 1;
-
-            renderDailyMoods(
-              day,
-              startRating,
-              endRating,
-              timeSlept,
-              humanStartTime,
-              humanEndTime
+          // iterate over each type of data
+          for (let j = 1; j < processedData.length - 3; j++) {
+            renderChart(
+              i + 1,
+              processedData[dataTypeIndex][j], // dataType
+              processedData[dataNameIndex][j], // dataName
+              processedData[dataYAxisIndex][j], // dataYAxis
+              [
+                processedData[0], // time data
+                processedData[j], // other specific data
+              ]
             );
           }
-        };
+        }
+      };
 
-        // HELPER FUNCTIONS
+      // FUNCTIONS TO GET DAILY MOODS
 
-        // round to 1 decimal point
-        const roundValue = (value) => {
-          return Number(value.toFixed(1));
-        };
+      // Create HTML elements to render daily mood info
+      const renderDailyMoods = (
+        day,
+        startRating,
+        endRating,
+        timeSlept,
+        sleepStart,
+        sleepEnd
+      ) => {
+        // Render time slept info
+        const timeSleptTotalString = `<p class="big-number">${timeSlept}</p>`;
+        document
+          .getElementById(`day${day}-timeSleptTotal`)
+          .insertAdjacentHTML("beforeend", timeSleptTotalString);
+        const timeSleptString = `<p>${sleepStart} - ${sleepEnd}</p>`;
+        document
+          .getElementById(`day${day}-timeSlept`)
+          .insertAdjacentHTML("beforeend", timeSleptString);
 
-        const calculateDewPoint = (tempVal, humidityVal) => {
-          return tempVal - (100 - humidityVal) / 5;
-        };
+        // Render before sleep ratings
+        const startRatingImgString = `<img src="${getRatingImage(
+          startRating
+        )}">`;
+        document
+          .getElementById(`day${day}-startRatingImg`)
+          .insertAdjacentHTML("beforeend", startRatingImgString);
+        const startRatingString = `<p>${startRating}/5</p>`;
+        document
+          .getElementById(`day${day}-startRating`)
+          .insertAdjacentHTML("beforeend", startRatingString);
 
-        const calculateHumidex = (tempVal, dewPointVal) => {
-          return roundValue(
-            tempVal +
-              (5 / 9) *
-                (6.11 *
-                  Math.exp(
-                    5417.753 * (1 / 273.16 - 1 / (273.15 + dewPointVal))
-                  ) -
-                  10)
+        // Render after sleep ratings
+        const endRatingImgString = `<img src="${getRatingImage(endRating)}">`;
+        document
+          .getElementById(`day${day}-endRatingImg`)
+          .insertAdjacentHTML("beforeend", endRatingImgString);
+        const endRatingString = `<p>${endRating}/5</p>`;
+        document
+          .getElementById(`day${day}-endRating`)
+          .insertAdjacentHTML("beforeend", endRatingString);
+      };
+
+      const generateDailyMoodsContent = (data) => {
+        // Iterate over each day's worth of mood data which is every other row
+        for (let i = 0; i < data.length - 1; i += 2) {
+          // isolate start and end objects
+          let start = data[i];
+          let end = data[i + 1];
+
+          // declare variables to easily read data
+          let startTime = start.timestamp;
+          let endTime = end.timestamp;
+
+          let humanStartTime = start.time;
+          let humanEndTime = end.time;
+
+          let startRating = start.rating;
+          let endRating = end.rating;
+
+          // calculate total time slept
+          let timeSlept = roundValue((endTime - startTime) / 3600);
+
+          // calculate which day the data is for
+          let day = i / 2 + 1;
+
+          renderDailyMoods(
+            day,
+            startRating,
+            endRating,
+            timeSlept,
+            humanStartTime,
+            humanEndTime
           );
-        };
+        }
+      };
 
-        const getRatingImage = (rating) => {
-          if (rating === 1) {
-            return "images/rating-1.png"; // mega sad face
-          } else if (rating === 2) {
-            return "images/rating-2.png"; // sad face
-          } else if (rating === 3) {
-            return "images/rating-3.png"; // ok face
-          } else if (rating === 4) {
-            return "images/rating-4.png"; // smiley face
-          } else if (rating === 5) {
-            return "images/rating-5.png"; // mega smiley face
-          }
-        };
+      // HELPER FUNCTIONS
 
-        parseFiles(filesToParse);
-      </script>
-    </main>
+      // round to 1 decimal point
+      const roundValue = (value) => {
+        return Number(value.toFixed(1));
+      };
+
+      const calculateDewPoint = (tempVal, humidityVal) => {
+        return tempVal - (100 - humidityVal) / 5;
+      };
+
+      const calculateHumidex = (tempVal, dewPointVal) => {
+        return roundValue(
+          tempVal +
+            (5 / 9) *
+              (6.11 *
+                Math.exp(5417.753 * (1 / 273.16 - 1 / (273.15 + dewPointVal))) -
+                10)
+        );
+      };
+
+      const getRatingImage = (rating) => {
+        if (rating === 1) {
+          return "images/rating-1.png"; // mega sad face
+        } else if (rating === 2) {
+          return "images/rating-2.png"; // sad face
+        } else if (rating === 3) {
+          return "images/rating-3.png"; // ok face
+        } else if (rating === 4) {
+          return "images/rating-4.png"; // smiley face
+        } else if (rating === 5) {
+          return "images/rating-5.png"; // mega smiley face
+        }
+      };
+
+      parseFiles(filesToParse);
+    </script>
   </body>
 </html>
