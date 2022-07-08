@@ -409,13 +409,13 @@
     // Create HTML elements to render daily mood info
     const renderMoodCellInfo = (day, dayNum, dayRating, sleepRating) => {
       // Render sleep ratings
-      const dayMood = `<p class="cell-info">Day mood: ${dayRating}</p>`;
+      const dayMood = `<p class="cell-info">Mood before sleep: ${dayRating}/5</p>`;
 
       document
         .getElementById(`${day}-cell`)
         .insertAdjacentHTML("beforeend", dayMood);
 
-      const sleepQuality = `<p class="cell-info">Sleep quality: ${sleepRating}</p>`;
+      const sleepQuality = `<p class="cell-info">Mood after sleep: ${sleepRating}/5</p>`;
 
       document
         .getElementById(`${day}-cell`)
@@ -424,11 +424,11 @@
       // Render sleep and day rating in card
       document.getElementById(
         `day${dayNum}-mood`
-      ).textContent += `Day mood: ${dayRating}`;
+      ).textContent += `Mood before sleep: ${dayRating}/5`;
 
       document.getElementById(
         `day${dayNum}-sleep`
-      ).textContent += `Sleep quality: ${sleepRating}`;
+      ).textContent += `Mood after sleep: ${sleepRating}/5`;
 
       // Render button to get day's info
       const linkString = `<button class="link-button" id="${day}-button">Learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></button>`;
